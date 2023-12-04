@@ -3,5 +3,5 @@ import { Repository } from 'typeorm';
 export declare class UserSeedService {
     private repository;
     constructor(repository: Repository<User>);
-    run(): Promise<void>;
+    run(): any;
 }

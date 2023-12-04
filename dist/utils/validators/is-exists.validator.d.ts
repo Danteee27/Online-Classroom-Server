@@ -4,5 +4,5 @@ import { ValidationArguments } from 'class-validator/types/validation/Validation
 export declare class IsExist implements ValidatorConstraintInterface {
     private dataSource;
     constructor(dataSource: DataSource);
-    validate(value: string, validationArguments: ValidationArguments): Promise<boolean>;
+    validate(value: string, validationArguments: ValidationArguments): unknown;
 }

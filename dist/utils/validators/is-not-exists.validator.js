@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IsNotExist = void 0;
 const class_validator_1 = require("class-validator");
@@ -40,6 +41,6 @@ exports.IsNotExist = IsNotExist = __decorate([
     (0, common_1.Injectable)(),
     (0, class_validator_1.ValidatorConstraint)({ name: 'IsNotExist', async: true }),
     __param(0, (0, typeorm_2.InjectDataSource)()),
-    __metadata("design:paramtypes", [typeorm_1.DataSource])
+    __metadata("design:paramtypes", [typeof (_a = typeof typeorm_1.DataSource !== "undefined" && typeorm_1.DataSource) === "function" ? _a : Object])
 ], IsNotExist);
 //# sourceMappingURL=is-not-exists.validator.js.map

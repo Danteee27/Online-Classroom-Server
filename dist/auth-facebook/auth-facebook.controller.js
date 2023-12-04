@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthFacebookController = void 0;
 const common_1 = require("@nestjs/common");
@@ -38,7 +39,7 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [auth_facebook_login_dto_1.AuthFacebookLoginDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", typeof (_a = typeof Promise !== "undefined" && Promise) === "function" ? _a : Object)
 ], AuthFacebookController.prototype, "login", null);
 exports.AuthFacebookController = AuthFacebookController = __decorate([
     (0, swagger_1.ApiTags)('Auth'),
