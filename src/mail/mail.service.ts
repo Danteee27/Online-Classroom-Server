@@ -1,17 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { I18nContext } from 'nestjs-i18n';
-import { MailData } from './interfaces/mail-data.interface';
-import { AllConfigType } from 'src/config/config.type';
-import { MaybeType } from '../utils/types/maybe.type';
-import { MailerService } from 'src/mailer/mailer.service';
-import path from 'path';
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { I18nContext } from "nestjs-i18n";
+import { MailData } from "./interfaces/mail-data.interface";
+import { AllConfigType } from "src/config/config.type";
+import { MaybeType } from "../utils/types/maybe.type";
+import { MailerService } from "src/mailer/mailer.service";
+import path from "path";
 
 @Injectable()
 export class MailService {
   constructor(
     private readonly mailerService: MailerService,
-    private readonly configService: ConfigService<AllConfigType>,
+    private readonly configService: ConfigService<AllConfigType>
   ) {}
 
   async userSignUp(mailData: MailData<{ hash: string }>): Promise<void> {
@@ -23,34 +23,36 @@ export class MailService {
 
     if (i18n) {
       [emailConfirmTitle, text1, text2, text3] = await Promise.all([
-        i18n.t('common.confirmEmail'),
-        i18n.t('confirm-email.text1'),
-        i18n.t('confirm-email.text2'),
-        i18n.t('confirm-email.text3'),
+        i18n.t("common.confirmEmail"),
+        i18n.t("confirm-email.text1"),
+        i18n.t("confirm-email.text2"),
+        i18n.t("confirm-email.text3"),
       ]);
     }
 
-    const url = new URL('http://localhost:3001/verificationConfirm');
-    url.searchParams.set('hash', mailData.data.hash);
+    const url = new URL(
+      "https://online-classroom-navy.vercel.app/verificationConfirm"
+    );
+    url.searchParams.set("hash", mailData.data.hash);
 
     await this.mailerService.sendMail({
       to: mailData.to,
       subject: emailConfirmTitle,
       text: `${url.toString()} ${emailConfirmTitle}`,
       templatePath: path.join(
-        this.configService.getOrThrow('app.workingDirectory', {
+        this.configService.getOrThrow("app.workingDirectory", {
           infer: true,
         }),
-        'src',
-        'mail',
-        'mail-templates',
-        'activation.hbs',
+        "src",
+        "mail",
+        "mail-templates",
+        "activation.hbs"
       ),
       context: {
         title: emailConfirmTitle,
         url: url.toString(),
         actionTitle: emailConfirmTitle,
-        app_name: this.configService.get('app.name', { infer: true }),
+        app_name: this.configService.get("app.name", { infer: true }),
         text1,
         text2,
         text3,
@@ -68,35 +70,37 @@ export class MailService {
 
     if (i18n) {
       [resetPasswordTitle, text1, text2, text3, text4] = await Promise.all([
-        i18n.t('common.resetPassword'),
-        i18n.t('reset-password.text1'),
-        i18n.t('reset-password.text2'),
-        i18n.t('reset-password.text3'),
-        i18n.t('reset-password.text4'),
+        i18n.t("common.resetPassword"),
+        i18n.t("reset-password.text1"),
+        i18n.t("reset-password.text2"),
+        i18n.t("reset-password.text3"),
+        i18n.t("reset-password.text4"),
       ]);
     }
 
-    const url = new URL('http://localhost:3001/resetpassword');
-    url.searchParams.set('hash', mailData.data.hash);
+    const url = new URL(
+      "https://online-classroom-navy.vercel.app/resetpassword"
+    );
+    url.searchParams.set("hash", mailData.data.hash);
 
     await this.mailerService.sendMail({
       to: mailData.to,
       subject: resetPasswordTitle,
       text: `${url.toString()} ${resetPasswordTitle}`,
       templatePath: path.join(
-        this.configService.getOrThrow('app.workingDirectory', {
+        this.configService.getOrThrow("app.workingDirectory", {
           infer: true,
         }),
-        'src',
-        'mail',
-        'mail-templates',
-        'reset-password.hbs',
+        "src",
+        "mail",
+        "mail-templates",
+        "reset-password.hbs"
       ),
       context: {
         title: resetPasswordTitle,
         url: url.toString(),
         actionTitle: resetPasswordTitle,
-        app_name: this.configService.get('app.name', {
+        app_name: this.configService.get("app.name", {
           infer: true,
         }),
         text1,
