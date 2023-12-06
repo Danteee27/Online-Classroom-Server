@@ -4,6 +4,6 @@ export declare class HomeService {
     private configService;
     constructor(configService: ConfigService<AllConfigType>);
     appInfo(): {
-        name: any;
+        name: string | undefined;
     };
 }

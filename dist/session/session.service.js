@@ -22,7 +22,6 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SessionService = void 0;
 const common_1 = require("@nestjs/common");
@@ -55,6 +54,6 @@ exports.SessionService = SessionService;
 exports.SessionService = SessionService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(session_entity_1.Session)),
-    __metadata("design:paramtypes", [typeof (_a = typeof typeorm_2.Repository !== "undefined" && typeorm_2.Repository) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], SessionService);
 //# sourceMappingURL=session.service.js.map

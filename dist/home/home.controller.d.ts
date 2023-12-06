@@ -3,6 +3,6 @@ export declare class HomeController {
     private service;
     constructor(service: HomeService);
     appInfo(): {
-        name: any;
+        name: string | undefined;
     };
 }
