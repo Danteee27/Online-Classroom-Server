@@ -11,10 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateClassDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
-const lower_case_transformer_1 = require("../../utils/transformers/lower-case.transformer");
-const is_not_exists_validator_1 = require("../../utils/validators/is-not-exists.validator");
 class CreateClassDto {
 }
 exports.CreateClassDto = CreateClassDto;
@@ -24,14 +21,6 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateClassDto.prototype, "className", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: "MATH101" }),
-    (0, class_transformer_1.Transform)(lower_case_transformer_1.lowerCaseTransformer),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.Validate)(is_not_exists_validator_1.IsNotExist, ["Class"], { message: "classCodeAlreadyExists" }),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], CreateClassDto.prototype, "classCode", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ example: "This is a math class" }),
     __metadata("design:type", Object)

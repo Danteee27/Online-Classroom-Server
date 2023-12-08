@@ -25,7 +25,7 @@ __decorate([
     __metadata("design:type", String)
 ], Class.prototype, "className", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: String, unique: true }),
+    (0, typeorm_1.Column)({ type: String, unique: true, generated: "uuid" }),
     __metadata("design:type", String)
 ], Class.prototype, "classCode", void 0);
 __decorate([

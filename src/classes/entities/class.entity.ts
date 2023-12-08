@@ -10,7 +10,7 @@ export class Class extends EntityHelper {
   @Column({ type: String })
   className: string;
 
-  @Column({ type: String, unique: true })
+  @Column({ type: String, unique: true, generated: "uuid" })
   classCode: string;
 
   @Column({ type: String, nullable: true })

@@ -10,13 +10,6 @@ export class CreateClassDto {
   @IsString()
   className: string;
 
-  @ApiProperty({ example: "MATH101" })
-  @Transform(lowerCaseTransformer)
-  @IsNotEmpty()
-  @Validate(IsNotExist, ["Class"], { message: "classCodeAlreadyExists" })
-  @IsString()
-  classCode: string;
-
   @ApiPropertyOptional({ example: "This is a math class" })
   description: string | null;
 }

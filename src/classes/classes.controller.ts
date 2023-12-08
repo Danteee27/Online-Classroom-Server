@@ -7,17 +7,12 @@ import {
   Param,
   Post,
   SerializeOptions,
-  UseGuards,
 } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
-import { Roles } from "src/roles/roles.decorator";
-import { RoleEnum } from "src/roles/roles.enum";
-import { RolesGuard } from "src/roles/roles.guard";
+import { ApiTags } from "@nestjs/swagger";
+import { NullableType } from "src/utils/types/nullable.type";
 import { ClassesService } from "./classes.service";
 import { CreateClassDto } from "./dto/create-class.dto";
 import { Class } from "./entities/class.entity";
-import { NullableType } from "src/utils/types/nullable.type";
 
 // @ApiBearerAuth()
 // @Roles(RoleEnum.user, RoleEnum.admin)
@@ -41,9 +36,9 @@ export class ClassesController {
   @SerializeOptions({
     groups: ["admin", "user"],
   })
-  @Get(":id")
+  @Get(":classCode")
   @HttpCode(HttpStatus.OK)
-  findOne(@Param("id") id: string): Promise<NullableType<Class>> {
-    return this.classesService.findOne({ id: +id });
+  findOne(@Param("classCode") classCode: string): Promise<NullableType<Class>> {
+    return this.classesService.findOne({ classCode });
   }
 }

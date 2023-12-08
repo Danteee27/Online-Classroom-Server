@@ -24,8 +24,8 @@ let ClassesController = class ClassesController {
     create(createClassDto) {
         return this.classesService.create(createClassDto);
     }
-    findOne(id) {
-        return this.classesService.findOne({ id: +id });
+    findOne(classCode) {
+        return this.classesService.findOne({ classCode });
     }
 };
 exports.ClassesController = ClassesController;
@@ -44,9 +44,9 @@ __decorate([
     (0, common_1.SerializeOptions)({
         groups: ["admin", "user"],
     }),
-    (0, common_1.Get)(":id"),
+    (0, common_1.Get)(":classCode"),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __param(0, (0, common_1.Param)("id")),
+    __param(0, (0, common_1.Param)("classCode")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
