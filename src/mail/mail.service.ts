@@ -6,6 +6,7 @@ import { AllConfigType } from "src/config/config.type";
 import { MaybeType } from "../utils/types/maybe.type";
 import { MailerService } from "src/mailer/mailer.service";
 import path from "path";
+import { ClassMembershipRole } from "src/classes/enums/class-membership-role.enum";
 
 @Injectable()
 export class MailService {
@@ -100,6 +101,72 @@ export class MailService {
         title: resetPasswordTitle,
         url: url.toString(),
         actionTitle: resetPasswordTitle,
+        app_name: this.configService.get("app.name", {
+          infer: true,
+        }),
+        text1,
+        text2,
+        text3,
+        text4,
+      },
+    });
+  }
+
+  async classInvitation(
+    mailData: MailData<{
+      userId: number;
+      role: ClassMembershipRole;
+      inviter: string;
+      className: string;
+      inviterId: number;
+    }>
+  ): Promise<void> {
+    const i18n = I18nContext.current();
+    let classInvitationTitle: MaybeType<string>;
+    let text1: MaybeType<string>;
+    let text2: MaybeType<string>;
+    let text3: MaybeType<string>;
+    let text4: MaybeType<string>;
+
+    if (mailData.data.role === ClassMembershipRole.TEACHER) {
+      classInvitationTitle = await i18n?.t("common.classInvitationTeacher");
+    } else {
+      classInvitationTitle = await i18n?.t("common.classInvitationStudent");
+    }
+
+    if (i18n) {
+      [text1, text2, text3, text4] = await Promise.all([
+        i18n.t("class-invitation.text1"),
+        i18n.t("class-invitation.text2"),
+        i18n.t("class-invitation.text3"),
+        i18n.t("class-invitation.text4"),
+      ]);
+    }
+
+    const url = new URL(
+      "https://online-classroom-navy.vercel.app/classinvitation"
+    );
+    url.searchParams.set("userId", mailData.data.userId.toString());
+    url.searchParams.set("role", mailData.data.role.toString());
+    url.searchParams.set("inviterId", mailData.data.inviterId.toString());
+
+    await this.mailerService.sendMail({
+      to: mailData.to,
+      subject: classInvitationTitle,
+      text: `${url.toString()} ${classInvitationTitle}`,
+      templatePath: path.join(
+        this.configService.getOrThrow("app.workingDirectory", {
+          infer: true,
+        }),
+        "src",
+        "mail",
+        "mail-templates",
+        "reset-password.hbs"
+      ),
+      context: {
+        title: classInvitationTitle,
+        url: url.toString(),
+        actionTitle: classInvitationTitle,
         app_name: this.configService.get("app.name", {
           infer: true,
         }),

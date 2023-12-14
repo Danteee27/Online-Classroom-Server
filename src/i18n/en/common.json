@@ -1,4 +1,6 @@
 {
   "confirmEmail": "Confirm email",
-  "resetPassword": "Reset password"
+  "resetPassword": "Reset password",
+  "classInvitationTeacher": "Class invitation for teacher",
+  "classInvitationStudent": "Class invitation for student"
 }

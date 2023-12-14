@@ -14,12 +14,13 @@ const typeorm_1 = require("typeorm");
 const class_membership_role_enum_1 = require("../enums/class-membership-role.enum");
 const user_entity_1 = require("../../users/entities/user.entity");
 const class_entity_1 = require("./class.entity");
+const class_membership_assignment_entity_1 = require("./class-membership-assignment.entity");
 let ClassMembership = class ClassMembership {
 };
 exports.ClassMembership = ClassMembership;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", Object)
 ], ClassMembership.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.classMemberships, {
@@ -41,6 +42,10 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], ClassMembership.prototype, "role", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => class_membership_assignment_entity_1.ClassMembershipAssignment, (classMembershipAssignment) => classMembershipAssignment.classMembership),
+    __metadata("design:type", Array)
+], ClassMembership.prototype, "classMembershipAssignments", void 0);
 exports.ClassMembership = ClassMembership = __decorate([
     (0, typeorm_1.Entity)()
 ], ClassMembership);

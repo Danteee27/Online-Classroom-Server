@@ -22,6 +22,7 @@ const entity_helper_1 = require("../../utils/entity-helper");
 const auth_providers_enum_1 = require("../../auth/auth-providers.enum");
 const class_transformer_1 = require("class-transformer");
 const class_membership_entity_1 = require("../../classes/entities/class-membership.entity");
+const assignment_entity_1 = require("../../classes/entities/assignment.entity");
 let User = class User extends entity_helper_1.EntityHelper {
     loadPreviousPassword() {
         this.previousPassword = this.password;
@@ -120,6 +121,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => class_membership_entity_1.ClassMembership, (classMembership) => classMembership.user),
     __metadata("design:type", Array)
 ], User.prototype, "classMemberships", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => assignment_entity_1.Assignment, (Assignment) => Assignment.creator),
+    __metadata("design:type", Array)
+], User.prototype, "assignments", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

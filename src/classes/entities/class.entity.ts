@@ -1,6 +1,7 @@
 import { EntityHelper } from "src/utils/entity-helper";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { ClassMembership } from "./class-membership.entity";
+import { Assignment } from "./assignment.entity";
 
 @Entity()
 export class Class extends EntityHelper {
@@ -18,4 +19,7 @@ export class Class extends EntityHelper {
 
   @OneToMany(() => ClassMembership, (classMembership) => classMembership.class)
   classMemberships: ClassMembership[];
+
+  @OneToMany(() => Assignment, (Assignment) => Assignment.class)
+  assignments: Assignment[];
 }

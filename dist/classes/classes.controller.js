@@ -24,8 +24,20 @@ let ClassesController = class ClassesController {
     create(createClassDto) {
         return this.classesService.create(createClassDto);
     }
-    findOne(classCode) {
-        return this.classesService.findOne({ classCode });
+    findAll() {
+        return this.classesService.findAll();
+    }
+    createAssigment(id, createAssignmentDto) {
+        return this.classesService.createAssignment(+id, createAssignmentDto);
+    }
+    addClassMember(id, createClassMemberDto) {
+        return this.classesService.addClassMembership(+id, createClassMemberDto);
+    }
+    inviteClassMember(inviteClassMembershipDto) {
+        return this.classesService.inviteClassmembership(inviteClassMembershipDto);
+    }
+    findOne(id) {
+        return this.classesService.findOne({ id: +id });
     }
 };
 exports.ClassesController = ClassesController;
@@ -44,9 +56,54 @@ __decorate([
     (0, common_1.SerializeOptions)({
         groups: ["admin", "user"],
     }),
-    (0, common_1.Get)(":classCode"),
+    (0, common_1.Get)(),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __param(0, (0, common_1.Param)("classCode")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ClassesController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.SerializeOptions)({
+        groups: ["admin", "user"],
+    }),
+    (0, common_1.Post)(":id/assignments"),
+    (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, create_class_dto_1.CreateAssignmentDto]),
+    __metadata("design:returntype", Promise)
+], ClassesController.prototype, "createAssigment", null);
+__decorate([
+    (0, common_1.SerializeOptions)({
+        groups: ["admin", "user"],
+    }),
+    (0, common_1.Post)(":id/classMemberships"),
+    (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, create_class_dto_1.AddClassMembershipDto]),
+    __metadata("design:returntype", Promise)
+], ClassesController.prototype, "addClassMember", null);
+__decorate([
+    (0, common_1.SerializeOptions)({
+        groups: ["admin", "user"],
+    }),
+    (0, common_1.Post)("inviteClassMembership"),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_class_dto_1.InviteClassMembershipDto]),
+    __metadata("design:returntype", Promise)
+], ClassesController.prototype, "inviteClassMember", null);
+__decorate([
+    (0, common_1.SerializeOptions)({
+        groups: ["admin", "user"],
+    }),
+    (0, common_1.Get)(":id"),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)

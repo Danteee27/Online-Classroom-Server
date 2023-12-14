@@ -14,12 +14,13 @@ const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const is_exists_validator_1 = require("../utils/validators/is-exists.validator");
 const is_not_exists_validator_1 = require("../utils/validators/is-not-exists.validator");
+const class_membership_entity_1 = require("../classes/entities/class-membership.entity");
 let UsersModule = class UsersModule {
 };
 exports.UsersModule = UsersModule;
 exports.UsersModule = UsersModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([user_entity_1.User])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, class_membership_entity_1.ClassMembership])],
         controllers: [users_controller_1.UsersController],
         providers: [is_exists_validator_1.IsExist, is_not_exists_validator_1.IsNotExist, users_service_1.UsersService],
         exports: [users_service_1.UsersService],

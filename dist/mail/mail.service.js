@@ -18,6 +18,7 @@ const config_1 = require("@nestjs/config");
 const nestjs_i18n_1 = require("nestjs-i18n");
 const mailer_service_1 = require("../mailer/mailer.service");
 const path_1 = __importDefault(require("path"));
+const class_membership_role_enum_1 = require("../classes/enums/class-membership-role.enum");
 let MailService = class MailService {
     constructor(mailerService, configService) {
         this.mailerService = mailerService;
@@ -86,6 +87,52 @@ let MailService = class MailService {
                 title: resetPasswordTitle,
                 url: url.toString(),
                 actionTitle: resetPasswordTitle,
+                app_name: this.configService.get("app.name", {
+                    infer: true,
+                }),
+                text1,
+                text2,
+                text3,
+                text4,
+            },
+        });
+    }
+    async classInvitation(mailData) {
+        const i18n = nestjs_i18n_1.I18nContext.current();
+        let classInvitationTitle;
+        let text1;
+        let text2;
+        let text3;
+        let text4;
+        if (mailData.data.role === class_membership_role_enum_1.ClassMembershipRole.TEACHER) {
+            classInvitationTitle = await (i18n === null || i18n === void 0 ? void 0 : i18n.t("common.classInvitationTeacher"));
+        }
+        else {
+            classInvitationTitle = await (i18n === null || i18n === void 0 ? void 0 : i18n.t("common.classInvitationStudent"));
+        }
+        if (i18n) {
+            [text1, text2, text3, text4] = await Promise.all([
+                i18n.t("class-invitation.text1"),
+                i18n.t("class-invitation.text2"),
+                i18n.t("class-invitation.text3"),
+                i18n.t("class-invitation.text4"),
+            ]);
+        }
+        const url = new URL("https://online-classroom-navy.vercel.app/classinvitation");
+        url.searchParams.set("userId", mailData.data.userId.toString());
+        url.searchParams.set("role", mailData.data.role.toString());
+        url.searchParams.set("inviterId", mailData.data.inviterId.toString());
+        await this.mailerService.sendMail({
+            to: mailData.to,
+            subject: classInvitationTitle,
+            text: `${url.toString()} ${classInvitationTitle}`,
+            templatePath: path_1.default.join(this.configService.getOrThrow("app.workingDirectory", {
+                infer: true,
+            }), "src", "mail", "mail-templates", "reset-password.hbs"),
+            context: {
+                title: classInvitationTitle,
+                url: url.toString(),
+                actionTitle: classInvitationTitle,
                 app_name: this.configService.get("app.name", {
                     infer: true,
                 }),

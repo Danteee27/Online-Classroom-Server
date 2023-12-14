@@ -13,6 +13,7 @@ exports.Class = void 0;
 const entity_helper_1 = require("../../utils/entity-helper");
 const typeorm_1 = require("typeorm");
 const class_membership_entity_1 = require("./class-membership.entity");
+const assignment_entity_1 = require("./assignment.entity");
 let Class = class Class extends entity_helper_1.EntityHelper {
 };
 exports.Class = Class;
@@ -36,6 +37,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => class_membership_entity_1.ClassMembership, (classMembership) => classMembership.class),
     __metadata("design:type", Array)
 ], Class.prototype, "classMemberships", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => assignment_entity_1.Assignment, (Assignment) => Assignment.class),
+    __metadata("design:type", Array)
+], Class.prototype, "assignments", void 0);
 exports.Class = Class = __decorate([
     (0, typeorm_1.Entity)()
 ], Class);

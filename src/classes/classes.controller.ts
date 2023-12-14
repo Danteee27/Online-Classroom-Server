@@ -11,8 +11,14 @@ import {
 import { ApiTags } from "@nestjs/swagger";
 import { NullableType } from "src/utils/types/nullable.type";
 import { ClassesService } from "./classes.service";
-import { CreateClassDto } from "./dto/create-class.dto";
+import {
+  AddClassMembershipDto,
+  CreateAssignmentDto,
+  CreateClassDto,
+  InviteClassMembershipDto,
+} from "./dto/create-class.dto";
 import { Class } from "./entities/class.entity";
+import { Assignment } from "./entities/assignment.entity";
 
 // @ApiBearerAuth()
 // @Roles(RoleEnum.user, RoleEnum.admin)
@@ -36,9 +42,53 @@ export class ClassesController {
   @SerializeOptions({
     groups: ["admin", "user"],
   })
-  @Get(":classCode")
+  @Get()
   @HttpCode(HttpStatus.OK)
-  findOne(@Param("classCode") classCode: string): Promise<NullableType<Class>> {
-    return this.classesService.findOne({ classCode });
+  findAll(): Promise<NullableType<Class[]>> {
+    return this.classesService.findAll();
+  }
+
+  @SerializeOptions({
+    groups: ["admin", "user"],
+  })
+  @Post(":id/assignments")
+  @HttpCode(HttpStatus.CREATED)
+  createAssigment(
+    @Param("id") id: string,
+    @Body() createAssignmentDto: CreateAssignmentDto
+  ): Promise<Assignment> {
+    return this.classesService.createAssignment(+id, createAssignmentDto);
+  }
+
+  @SerializeOptions({
+    groups: ["admin", "user"],
+  })
+  @Post(":id/classMemberships")
+  @HttpCode(HttpStatus.CREATED)
+  addClassMember(
+    @Param("id") id: string,
+    @Body() createClassMemberDto: AddClassMembershipDto
+  ): Promise<Class> {
+    return this.classesService.addClassMembership(+id, createClassMemberDto);
+  }
+
+  @SerializeOptions({
+    groups: ["admin", "user"],
+  })
+  @Post("inviteClassMembership")
+  @HttpCode(HttpStatus.OK)
+  inviteClassMember(
+    @Body() inviteClassMembershipDto: InviteClassMembershipDto
+  ): Promise<Class> {
+    return this.classesService.inviteClassmembership(inviteClassMembershipDto);
+  }
+
+  @SerializeOptions({
+    groups: ["admin", "user"],
+  })
+  @Get(":id")
+  @HttpCode(HttpStatus.OK)
+  findOne(@Param("id") id: string): Promise<NullableType<Class>> {
+    return this.classesService.findOne({ id: +id });
   }
 }

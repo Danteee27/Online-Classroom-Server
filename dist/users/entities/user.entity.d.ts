@@ -3,6 +3,7 @@ import { Status } from "../../statuses/entities/status.entity";
 import { FileEntity } from "../../files/entities/file.entity";
 import { EntityHelper } from "src/utils/entity-helper";
 import { ClassMembership } from "src/classes/entities/class-membership.entity";
+import { Assignment } from "src/classes/entities/assignment.entity";
 export declare class User extends EntityHelper {
     id: number;
     email: string | null;
@@ -21,4 +22,5 @@ export declare class User extends EntityHelper {
     updatedAt: Date;
     deletedAt: Date;
     classMemberships: ClassMembership[];
+    assignments: Assignment[];
 }

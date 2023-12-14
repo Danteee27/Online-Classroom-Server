@@ -11,34 +11,34 @@ import {
   HttpStatus,
   HttpCode,
   SerializeOptions,
-} from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Roles } from 'src/roles/roles.decorator';
-import { RoleEnum } from 'src/roles/roles.enum';
-import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from 'src/roles/roles.guard';
-import { infinityPagination } from 'src/utils/infinity-pagination';
-import { User } from './entities/user.entity';
-import { InfinityPaginationResultType } from '../utils/types/infinity-pagination-result.type';
-import { NullableType } from '../utils/types/nullable.type';
-import { QueryUserDto } from './dto/query-user.dto';
+} from "@nestjs/common";
+import { UsersService } from "./users.service";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { Roles } from "src/roles/roles.decorator";
+import { RoleEnum } from "src/roles/roles.enum";
+import { AuthGuard } from "@nestjs/passport";
+import { RolesGuard } from "src/roles/roles.guard";
+import { infinityPagination } from "src/utils/infinity-pagination";
+import { User } from "./entities/user.entity";
+import { InfinityPaginationResultType } from "../utils/types/infinity-pagination-result.type";
+import { NullableType } from "../utils/types/nullable.type";
+import { QueryUserDto } from "./dto/query-user.dto";
 
-@ApiBearerAuth()
-@Roles(RoleEnum.admin)
-@UseGuards(AuthGuard('jwt'), RolesGuard)
-@ApiTags('Users')
+// @ApiBearerAuth()
+// @Roles(RoleEnum.admin)
+// @UseGuards(AuthGuard("jwt"), RolesGuard)
+@ApiTags("Users")
 @Controller({
-  path: 'users',
-  version: '1',
+  path: "users",
+  version: "1",
 })
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @SerializeOptions({
-    groups: ['admin'],
+    groups: ["admin"],
   })
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -47,12 +47,12 @@ export class UsersController {
   }
 
   @SerializeOptions({
-    groups: ['admin'],
+    groups: ["admin"],
   })
   @Get()
   @HttpCode(HttpStatus.OK)
   async findAll(
-    @Query() query: QueryUserDto,
+    @Query() query: QueryUserDto
   ): Promise<InfinityPaginationResultType<User>> {
     const page = query?.page ?? 1;
     let limit = query?.limit ?? 10;
@@ -69,34 +69,62 @@ export class UsersController {
           limit,
         },
       }),
-      { page, limit },
+      { page, limit }
     );
   }
 
   @SerializeOptions({
-    groups: ['admin'],
+    groups: ["user,admin"],
   })
-  @Get(':id')
+  @Get(":id/classes")
   @HttpCode(HttpStatus.OK)
-  findOne(@Param('id') id: string): Promise<NullableType<User>> {
+  async findClasses(
+    @Param("id") id: string,
+    @Query() query: QueryUserDto
+  ): Promise<InfinityPaginationResultType<User>> {
+    const page = query?.page ?? 1;
+    let limit = query?.limit ?? 10;
+    if (limit > 50) {
+      limit = 50;
+    }
+
+    return infinityPagination(
+      await this.usersService.findManyWithPagination({
+        filterOptions: query?.filters,
+        sortOptions: query?.sort,
+        paginationOptions: {
+          page,
+          limit,
+        },
+      }),
+      { page, limit }
+    );
+  }
+
+  @SerializeOptions({
+    groups: ["admin"],
+  })
+  @Get(":id")
+  @HttpCode(HttpStatus.OK)
+  findOne(@Param("id") id: string): Promise<NullableType<User>> {
     return this.usersService.findOne({ id: +id });
   }
 
   @SerializeOptions({
-    groups: ['admin'],
+    groups: ["admin"],
   })
-  @Patch(':id')
+  @Patch(":id")
   @HttpCode(HttpStatus.OK)
   update(
-    @Param('id') id: number,
-    @Body() updateProfileDto: UpdateUserDto,
+    @Param("id") id: number,
+    @Body() updateProfileDto: UpdateUserDto
   ): Promise<User> {
     return this.usersService.update(id, updateProfileDto);
   }
 
-  @Delete(':id')
+  @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: number): Promise<void> {
+  remove(@Param("id") id: number): Promise<void> {
     return this.usersService.softDelete(id);
   }
 }

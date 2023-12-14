@@ -42,6 +42,13 @@ let UsersService = class UsersService {
     findOne(fields) {
         return this.usersRepository.findOne({
             where: fields,
+            relations: [
+                "role",
+                "classMemberships",
+                "assignments",
+                "classMemberships.classMembershipAssignments",
+                "classMemberships.classMembershipAssignments.assignment.creator",
+            ],
         });
     }
     update(id, payload) {

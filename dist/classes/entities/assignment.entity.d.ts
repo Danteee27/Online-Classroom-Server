@@ -1,11 +1,14 @@
-import { ClassMembershipRole } from "../enums/class-membership-role.enum";
-import { User } from "src/users/entities/user.entity";
 import { Class } from "./class.entity";
+import { User } from "src/users/entities/user.entity";
 import { ClassMembershipAssignment } from "./class-membership-assignment.entity";
-export declare class ClassMembership {
+export declare class Assignment {
     id: number | null;
-    user: User;
     class: Class;
-    role: ClassMembershipRole;
+    creator: User;
+    maxGrade: number;
+    name: string;
+    description: string;
+    createdDate: Date;
+    dueDate: Date;
     classMembershipAssignments: ClassMembershipAssignment[];
 }

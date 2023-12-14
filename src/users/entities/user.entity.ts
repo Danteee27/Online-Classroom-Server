@@ -20,6 +20,7 @@ import { EntityHelper } from "src/utils/entity-helper";
 import { AuthProvidersEnum } from "src/auth/auth-providers.enum";
 import { Exclude, Expose } from "class-transformer";
 import { ClassMembership } from "src/classes/entities/class-membership.entity";
+import { Assignment } from "src/classes/entities/assignment.entity";
 
 @Entity()
 export class User extends EntityHelper {
@@ -94,4 +95,7 @@ export class User extends EntityHelper {
 
   @OneToMany(() => ClassMembership, (classMembership) => classMembership.user)
   classMemberships: ClassMembership[];
+
+  @OneToMany(() => Assignment, (Assignment) => Assignment.creator)
+  assignments: Assignment[];
 }
