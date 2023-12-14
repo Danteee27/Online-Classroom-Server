@@ -11,4 +11,5 @@ export declare class Assignment {
     createdDate: Date;
     dueDate: Date;
     classMembershipAssignments: ClassMembershipAssignment[];
+    deleted: boolean;
 }

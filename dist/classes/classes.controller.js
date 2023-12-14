@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const classes_service_1 = require("./classes.service");
 const create_class_dto_1 = require("./dto/create-class.dto");
+const update_class_dto_1 = require("./dto/update-class.dto");
 let ClassesController = class ClassesController {
     constructor(classesService) {
         this.classesService = classesService;
@@ -29,6 +30,12 @@ let ClassesController = class ClassesController {
     }
     createAssigment(id, createAssignmentDto) {
         return this.classesService.createAssignment(+id, createAssignmentDto);
+    }
+    updateAssigment(id, assignmentId, updateAssignmentDto) {
+        return this.classesService.updateAssignment(+id, +assignmentId, updateAssignmentDto);
+    }
+    updateClassMembershipAssignment(classId, assignmentId, classMembershipId, updateClassMembershipAssignmentDto) {
+        return this.classesService.updateClassMembershipAssignment(+classId, +assignmentId, +classMembershipId, updateClassMembershipAssignmentDto);
     }
     addClassMember(id, createClassMemberDto) {
         return this.classesService.addClassMembership(+id, createClassMemberDto);
@@ -74,6 +81,33 @@ __decorate([
     __metadata("design:paramtypes", [String, create_class_dto_1.CreateAssignmentDto]),
     __metadata("design:returntype", Promise)
 ], ClassesController.prototype, "createAssigment", null);
+__decorate([
+    (0, common_1.SerializeOptions)({
+        groups: ["admin", "user"],
+    }),
+    (0, common_1.Put)(":id/assignments/:assignmentId"),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Param)("assignmentId")),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, update_class_dto_1.UpdateAssignmentDto]),
+    __metadata("design:returntype", Promise)
+], ClassesController.prototype, "updateAssigment", null);
+__decorate([
+    (0, common_1.SerializeOptions)({
+        groups: ["admin", "user"],
+    }),
+    (0, common_1.Put)(":classId/classMemberships/:classMembershipId/assignment/:assignmentId"),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Param)("classId")),
+    __param(1, (0, common_1.Param)("assignmentId")),
+    __param(2, (0, common_1.Param)("classMembershipId")),
+    __param(3, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String, update_class_dto_1.UpdateClassMembershipAssignmentDto]),
+    __metadata("design:returntype", Promise)
+], ClassesController.prototype, "updateClassMembershipAssignment", null);
 __decorate([
     (0, common_1.SerializeOptions)({
         groups: ["admin", "user"],

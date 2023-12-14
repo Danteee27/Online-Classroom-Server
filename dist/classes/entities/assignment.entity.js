@@ -57,6 +57,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => class_membership_assignment_entity_1.ClassMembershipAssignment, (classMembershipAssignment) => classMembershipAssignment.assignment),
     __metadata("design:type", Array)
 ], Assignment.prototype, "classMembershipAssignments", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], Assignment.prototype, "deleted", void 0);
 exports.Assignment = Assignment = __decorate([
     (0, typeorm_1.Entity)()
 ], Assignment);

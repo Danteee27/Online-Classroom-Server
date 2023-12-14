@@ -21,6 +21,9 @@ export class ClassMembershipAssignment {
   classMembership: ClassMembership;
 
   @Column({ type: Number, nullable: true })
+  currentGrade: number | null;
+
+  @Column({ type: Number, nullable: true })
   grade: number | null;
 
   @Column({ type: String, nullable: true })

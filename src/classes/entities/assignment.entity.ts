@@ -45,4 +45,7 @@ export class Assignment {
     (classMembershipAssignment) => classMembershipAssignment.assignment
   )
   classMembershipAssignments: ClassMembershipAssignment[];
+
+  @Column({ type: Boolean, default: false })
+  deleted: boolean;
 }

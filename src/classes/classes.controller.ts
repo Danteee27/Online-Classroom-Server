@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   SerializeOptions,
+  Put,
 } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { NullableType } from "src/utils/types/nullable.type";
@@ -19,6 +20,11 @@ import {
 } from "./dto/create-class.dto";
 import { Class } from "./entities/class.entity";
 import { Assignment } from "./entities/assignment.entity";
+import {
+  UpdateAssignmentDto,
+  UpdateClassMembershipAssignmentDto,
+} from "./dto/update-class.dto";
+import { ClassMembershipAssignment } from "./entities/class-membership-assignment.entity";
 
 // @ApiBearerAuth()
 // @Roles(RoleEnum.user, RoleEnum.admin)
@@ -58,6 +64,44 @@ export class ClassesController {
     @Body() createAssignmentDto: CreateAssignmentDto
   ): Promise<Assignment> {
     return this.classesService.createAssignment(+id, createAssignmentDto);
+  }
+
+  @SerializeOptions({
+    groups: ["admin", "user"],
+  })
+  @Put(":id/assignments/:assignmentId")
+  @HttpCode(HttpStatus.OK)
+  updateAssigment(
+    @Param("id") id: string,
+    @Param("assignmentId") assignmentId: string,
+    @Body() updateAssignmentDto: UpdateAssignmentDto
+  ): Promise<Assignment> {
+    return this.classesService.updateAssignment(
+      +id,
+      +assignmentId,
+      updateAssignmentDto
+    );
+  }
+
+  @SerializeOptions({
+    groups: ["admin", "user"],
+  })
+  @Put(":classId/classMemberships/:classMembershipId/assignment/:assignmentId")
+  @HttpCode(HttpStatus.OK)
+  updateClassMembershipAssignment(
+    @Param("classId") classId: string,
+    @Param("assignmentId") assignmentId: string,
+    @Param("classMembershipId") classMembershipId: string,
+
+    @Body()
+    updateClassMembershipAssignmentDto: UpdateClassMembershipAssignmentDto
+  ): Promise<ClassMembershipAssignment> {
+    return this.classesService.updateClassMembershipAssignment(
+      +classId,
+      +assignmentId,
+      +classMembershipId,
+      updateClassMembershipAssignmentDto
+    );
   }
 
   @SerializeOptions({

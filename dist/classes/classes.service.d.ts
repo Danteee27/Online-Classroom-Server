@@ -8,6 +8,7 @@ import { UsersService } from "src/users/users.service";
 import { MailService } from "src/mail/mail.service";
 import { Assignment } from "./entities/assignment.entity";
 import { ClassMembershipAssignment } from "./entities/class-membership-assignment.entity";
+import { UpdateAssignmentDto } from "./dto/update-class.dto";
 export declare class ClassesService {
     private classRepository;
     private usersService;
@@ -23,4 +24,6 @@ export declare class ClassesService {
     inviteClassmembership(inviteClassMembershipDto: InviteClassMembershipDto): Promise<any>;
     update(id: Class["id"], updateClassDto: CreateClassDto): Promise<Class>;
     createAssignment(classId: Class["id"], createAssignmentDto: CreateAssignmentDto): Promise<Assignment>;
+    updateClassMembershipAssignment(classId: Class["id"], assignmentId: Assignment["id"], classMembershipId: ClassMembership["id"], updateClassMembershipAssignmentDto: Partial<ClassMembershipAssignment>): Promise<ClassMembershipAssignment>;
+    updateAssignment(classId: Class["id"], assignmentId: Assignment["id"], updateAssignmentDto: UpdateAssignmentDto): Promise<Assignment>;
 }

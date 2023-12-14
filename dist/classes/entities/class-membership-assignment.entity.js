@@ -31,6 +31,10 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: Number, nullable: true }),
     __metadata("design:type", Object)
+], ClassMembershipAssignment.prototype, "currentGrade", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: Number, nullable: true }),
+    __metadata("design:type", Object)
 ], ClassMembershipAssignment.prototype, "grade", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: String, nullable: true }),

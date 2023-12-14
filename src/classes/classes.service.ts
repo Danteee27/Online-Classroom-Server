@@ -17,6 +17,7 @@ import { ClassMembershipRole } from "./enums/class-membership-role.enum";
 import { Assignment } from "./entities/assignment.entity";
 import { ClassMembershipAssignment } from "./entities/class-membership-assignment.entity";
 import { User } from "src/users/entities/user.entity";
+import { UpdateAssignmentDto } from "./dto/update-class.dto";
 
 @Injectable()
 export class ClassesService {
@@ -237,5 +238,61 @@ export class ClassesService {
     await this.classMembershipRepository.save(classEntity.classMemberships);
 
     return assignment;
+  }
+
+  async updateClassMembershipAssignment(
+    classId: Class["id"],
+    assignmentId: Assignment["id"],
+    classMembershipId: ClassMembership["id"],
+    updateClassMembershipAssignmentDto: Partial<ClassMembershipAssignment>
+  ): Promise<ClassMembershipAssignment> {
+    if (!assignmentId || !classMembershipId) {
+      throw new HttpException("Missing assignmentId or classMembershipId", 400);
+    }
+    const classMembershipAssignment =
+      await this.classMembershipAssignmentRepository.findOne({
+        where: {
+          assignment: { id: +assignmentId },
+          classMembership: { id: +classMembershipId },
+        },
+      });
+
+    if (!classMembershipAssignment) {
+      throw new HttpException("ClassMembershipAssignment not found", 404);
+    }
+
+    const updatedClassMembershipAssignment =
+      this.classMembershipAssignmentRepository.merge(
+        classMembershipAssignment,
+        updateClassMembershipAssignmentDto
+      );
+
+    return this.classMembershipAssignmentRepository.save(
+      updatedClassMembershipAssignment
+    );
+  }
+
+  async updateAssignment(
+    classId: Class["id"],
+    assignmentId: Assignment["id"],
+    updateAssignmentDto: UpdateAssignmentDto
+  ): Promise<Assignment> {
+    if (!assignmentId) {
+      throw new HttpException("Missing assignmentId", 400);
+    }
+    const assignment = await this.assignmentRepository.findOne({
+      where: { id: +assignmentId, class: { id: +classId } },
+    });
+
+    if (!assignment) {
+      throw new HttpException("Assignment not found", 404);
+    }
+
+    const updatedAssignment = this.assignmentRepository.merge(
+      assignment,
+      updateAssignmentDto
+    );
+
+    return this.assignmentRepository.save(updatedAssignment);
   }
 }

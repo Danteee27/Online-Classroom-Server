@@ -176,6 +176,35 @@ let ClassesService = class ClassesService {
         await this.classMembershipRepository.save(classEntity.classMemberships);
         return assignment;
     }
+    async updateClassMembershipAssignment(classId, assignmentId, classMembershipId, updateClassMembershipAssignmentDto) {
+        if (!assignmentId || !classMembershipId) {
+            throw new common_1.HttpException("Missing assignmentId or classMembershipId", 400);
+        }
+        const classMembershipAssignment = await this.classMembershipAssignmentRepository.findOne({
+            where: {
+                assignment: { id: +assignmentId },
+                classMembership: { id: +classMembershipId },
+            },
+        });
+        if (!classMembershipAssignment) {
+            throw new common_1.HttpException("ClassMembershipAssignment not found", 404);
+        }
+        const updatedClassMembershipAssignment = this.classMembershipAssignmentRepository.merge(classMembershipAssignment, updateClassMembershipAssignmentDto);
+        return this.classMembershipAssignmentRepository.save(updatedClassMembershipAssignment);
+    }
+    async updateAssignment(classId, assignmentId, updateAssignmentDto) {
+        if (!assignmentId) {
+            throw new common_1.HttpException("Missing assignmentId", 400);
+        }
+        const assignment = await this.assignmentRepository.findOne({
+            where: { id: +assignmentId, class: { id: +classId } },
+        });
+        if (!assignment) {
+            throw new common_1.HttpException("Assignment not found", 404);
+        }
+        const updatedAssignment = this.assignmentRepository.merge(assignment, updateAssignmentDto);
+        return this.assignmentRepository.save(updatedAssignment);
+    }
 };
 exports.ClassesService = ClassesService;
 exports.ClassesService = ClassesService = __decorate([
