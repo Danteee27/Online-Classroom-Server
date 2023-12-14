@@ -16,7 +16,6 @@ exports.FilesController = void 0;
 const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
 const swagger_1 = require("@nestjs/swagger");
-const passport_1 = require("@nestjs/passport");
 const files_service_1 = require("./files.service");
 let FilesController = class FilesController {
     constructor(filesService) {
@@ -26,45 +25,43 @@ let FilesController = class FilesController {
         return this.filesService.uploadFile(file);
     }
     download(path, response) {
-        return response.sendFile(path, { root: './files' });
+        return response.sendFile(path, { root: "./files" });
     }
 };
 exports.FilesController = FilesController;
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
-    (0, common_1.Post)('upload'),
-    (0, swagger_1.ApiConsumes)('multipart/form-data'),
+    (0, common_1.Post)("upload"),
+    (0, swagger_1.ApiConsumes)("multipart/form-data"),
     (0, swagger_1.ApiBody)({
         schema: {
-            type: 'object',
+            type: "object",
             properties: {
                 file: {
-                    type: 'string',
-                    format: 'binary',
+                    type: "string",
+                    format: "binary",
                 },
             },
         },
     }),
-    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("file")),
     __param(0, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], FilesController.prototype, "uploadFile", null);
 __decorate([
-    (0, common_1.Get)(':path'),
-    __param(0, (0, common_1.Param)('path')),
+    (0, common_1.Get)(":path"),
+    __param(0, (0, common_1.Param)("path")),
     __param(1, (0, common_1.Response)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
 ], FilesController.prototype, "download", null);
 exports.FilesController = FilesController = __decorate([
-    (0, swagger_1.ApiTags)('Files'),
+    (0, swagger_1.ApiTags)("Files"),
     (0, common_1.Controller)({
-        path: 'files',
-        version: '1',
+        path: "files",
+        version: "1",
     }),
     __metadata("design:paramtypes", [files_service_1.FilesService])
 ], FilesController);

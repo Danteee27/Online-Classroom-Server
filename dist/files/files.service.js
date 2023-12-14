@@ -28,16 +28,17 @@ let FilesService = class FilesService {
             throw new common_1.HttpException({
                 status: common_1.HttpStatus.UNPROCESSABLE_ENTITY,
                 errors: {
-                    file: 'selectFile',
+                    file: "selectFile",
                 },
             }, common_1.HttpStatus.UNPROCESSABLE_ENTITY);
         }
         const path = {
-            local: `/${this.configService.get('app.apiPrefix', { infer: true })}/v1/${file.path}`,
+            local: `/${this.configService.get("app.apiPrefix", { infer: true })}/v1/${file.path}`,
             s3: file.location,
         };
+        console.log("lpath", path.local);
         return this.fileRepository.save(this.fileRepository.create({
-            path: path[this.configService.getOrThrow('file.driver', { infer: true })],
+            path: path[this.configService.getOrThrow("file.driver", { infer: true })],
         }));
     }
 };

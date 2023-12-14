@@ -5,7 +5,7 @@ API_PREFIX=api
 APP_FALLBACK_LANGUAGE=en
 APP_HEADER_LANGUAGE=x-custom-lang
 FRONTEND_DOMAIN=http://localhost:3000
-BACKEND_DOMAIN=http://localhost:3000
+BACKEND_DOMAIN=https://web-production-dfdf.up.railway.app/
 
 DATABASE_TYPE=postgres
 DATABASE_HOST=postgres
@@ -23,7 +23,7 @@ DATABASE_CERT=
 
 # Support "local", "s3"
 FILE_DRIVER=local
-ACCESS_KEY_ID=
+ACCESS_KEY_ID=  
 SECRET_ACCESS_KEY=
 AWS_S3_REGION=
 AWS_DEFAULT_S3_BUCKET=
