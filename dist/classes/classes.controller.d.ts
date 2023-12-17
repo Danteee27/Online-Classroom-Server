@@ -15,5 +15,6 @@ export declare class ClassesController {
     updateClassMembershipAssignment(classId: string, assignmentId: string, classMembershipId: string, updateClassMembershipAssignmentDto: UpdateClassMembershipAssignmentDto): Promise<ClassMembershipAssignment>;
     addClassMember(id: string, createClassMemberDto: AddClassMembershipDto): Promise<Class>;
     inviteClassMember(inviteClassMembershipDto: InviteClassMembershipDto): Promise<Class>;
+    findByClassCode(classCode: string): Promise<NullableType<Class>>;
     findOne(id: string): Promise<NullableType<Class>>;
 }

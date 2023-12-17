@@ -126,6 +126,16 @@ export class ClassesController {
   ): Promise<Class> {
     return this.classesService.inviteClassmembership(inviteClassMembershipDto);
   }
+  @SerializeOptions({
+    groups: ["admin", "user"],
+  })
+  @Get("byClasscode/:classCode")
+  @HttpCode(HttpStatus.OK)
+  findByClassCode(
+    @Param("classCode") classCode: string
+  ): Promise<NullableType<Class>> {
+    return this.classesService.findOne({ classCode: classCode });
+  }
 
   @SerializeOptions({
     groups: ["admin", "user"],

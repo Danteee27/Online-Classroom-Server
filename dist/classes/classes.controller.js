@@ -43,6 +43,9 @@ let ClassesController = class ClassesController {
     inviteClassMember(inviteClassMembershipDto) {
         return this.classesService.inviteClassmembership(inviteClassMembershipDto);
     }
+    findByClassCode(classCode) {
+        return this.classesService.findOne({ classCode: classCode });
+    }
     findOne(id) {
         return this.classesService.findOne({ id: +id });
     }
@@ -131,6 +134,17 @@ __decorate([
     __metadata("design:paramtypes", [create_class_dto_1.InviteClassMembershipDto]),
     __metadata("design:returntype", Promise)
 ], ClassesController.prototype, "inviteClassMember", null);
+__decorate([
+    (0, common_1.SerializeOptions)({
+        groups: ["admin", "user"],
+    }),
+    (0, common_1.Get)("byClasscode/:classCode"),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Param)("classCode")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ClassesController.prototype, "findByClassCode", null);
 __decorate([
     (0, common_1.SerializeOptions)({
         groups: ["admin", "user"],
