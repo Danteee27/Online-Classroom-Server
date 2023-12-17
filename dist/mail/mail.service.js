@@ -122,6 +122,7 @@ let MailService = class MailService {
         url.searchParams.set("userId", mailData.data.userId.toString());
         url.searchParams.set("role", mailData.data.role.toString());
         url.searchParams.set("inviterId", mailData.data.inviterId.toString());
+        url.searchParams.set("classId", mailData.data.classId.toString());
         await this.mailerService.sendMail({
             to: mailData.to,
             subject: classInvitationTitle,

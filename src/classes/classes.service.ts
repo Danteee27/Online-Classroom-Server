@@ -37,8 +37,6 @@ export class ClassesService {
   async create(createClassDto: CreateClassDto): Promise<Class> {
     let classEntity = this.classRepository.create(createClassDto);
     classEntity = await this.classRepository.save(classEntity);
-    console.log("why", createClassDto);
-    console.log("why", classEntity);
 
     const user = await this.usersService.findOne({
       id: +createClassDto.userId,
@@ -168,6 +166,7 @@ export class ClassesService {
         inviter: inviter.firstName + " " + inviter.lastName,
         className: classEntity.className,
         inviterId: inviter.id,
+        classId: classEntity.id,
       },
     });
   }

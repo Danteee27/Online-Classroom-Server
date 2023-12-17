@@ -19,5 +19,6 @@ export declare class MailService {
         inviter: string;
         className: string;
         inviterId: number;
+        classId: number;
     }>): Promise<void>;
 }
