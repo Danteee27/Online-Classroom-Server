@@ -29,8 +29,9 @@ __decorate([
     __metadata("design:type", String)
 ], CreateClassDto.prototype, "className", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)({ example: "This is a math class" }),
-    __metadata("design:type", Object)
+    (0, swagger_1.ApiProperty)({ example: "This is a math class" }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
 ], CreateClassDto.prototype, "description", void 0);
 class AddClassMembershipDto {
 }

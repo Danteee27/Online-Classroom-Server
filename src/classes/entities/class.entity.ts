@@ -15,7 +15,7 @@ export class Class extends EntityHelper {
   classCode: string;
 
   @Column({ type: String, nullable: true })
-  description: string | null;
+  description: string;
 
   @OneToMany(() => ClassMembership, (classMembership) => classMembership.class)
   classMemberships: ClassMembership[];

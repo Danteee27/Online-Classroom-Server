@@ -5,7 +5,7 @@ export declare class Class extends EntityHelper {
     id: number;
     className: string;
     classCode: string;
-    description: string | null;
+    description: string;
     classMemberships: ClassMembership[];
     assignments: Assignment[];
 }

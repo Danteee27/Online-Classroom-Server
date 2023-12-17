@@ -35,8 +35,10 @@ export class ClassesService {
   ) {}
 
   async create(createClassDto: CreateClassDto): Promise<Class> {
-    const classEntity = this.classRepository.create(createClassDto);
-    await this.classRepository.save(classEntity);
+    let classEntity = this.classRepository.create(createClassDto);
+    classEntity = await this.classRepository.save(classEntity);
+    console.log("why", createClassDto);
+    console.log("why", classEntity);
 
     const user = await this.usersService.findOne({
       id: +createClassDto.userId,

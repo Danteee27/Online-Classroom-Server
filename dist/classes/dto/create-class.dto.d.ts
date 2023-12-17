@@ -2,7 +2,7 @@ import { ClassMembershipRole } from "../enums/class-membership-role.enum";
 export declare class CreateClassDto {
     userId: string;
     className: string;
-    description: string | null;
+    description: string;
 }
 export declare class AddClassMembershipDto {
     userId: string;

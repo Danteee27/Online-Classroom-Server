@@ -16,8 +16,9 @@ export class CreateClassDto {
   @IsString()
   className: string;
 
-  @ApiPropertyOptional({ example: "This is a math class" })
-  description: string | null;
+  @ApiProperty({ example: "This is a math class" })
+  @IsString()
+  description: string;
 }
 
 export class AddClassMembershipDto {

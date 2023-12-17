@@ -31,7 +31,7 @@ __decorate([
 ], Class.prototype, "classCode", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: String, nullable: true }),
-    __metadata("design:type", Object)
+    __metadata("design:type", String)
 ], Class.prototype, "description", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => class_membership_entity_1.ClassMembership, (classMembership) => classMembership.class),
