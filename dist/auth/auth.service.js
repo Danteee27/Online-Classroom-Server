@@ -148,11 +148,13 @@ let AuthService = class AuthService {
         };
     }
     async register(dto) {
+        const salt = await bcryptjs_1.default.genSalt();
+        const password = await bcryptjs_1.default.hash(dto.password, salt);
         const user = await this.usersService.create(Object.assign(Object.assign({}, dto), { email: dto.email, role: {
                 id: roles_enum_1.RoleEnum.user,
             }, status: {
                 id: statuses_enum_1.StatusEnum.inactive,
-            } }));
+            }, password: password }));
         const hash = await this.jwtService.signAsync({
             confirmEmailUserId: user.id,
         }, {
@@ -261,7 +263,9 @@ let AuthService = class AuthService {
                 },
             }, common_1.HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        user.password = password;
+        const salt = await bcryptjs_1.default.genSalt();
+        const hashedPassword = await bcryptjs_1.default.hash(password, salt);
+        user.password = hashedPassword;
         await this.sessionService.softDelete({
             user: {
                 id: user.id,

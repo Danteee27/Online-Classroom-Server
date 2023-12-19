@@ -8,9 +8,6 @@ export declare class User extends EntityHelper {
     id: number;
     email: string | null;
     password: string;
-    previousPassword: string;
-    loadPreviousPassword(): void;
-    setPassword(): Promise<void>;
     provider: string;
     socialId: string | null;
     firstName: string | null;

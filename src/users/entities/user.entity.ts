@@ -35,23 +35,6 @@ export class User extends EntityHelper {
   @Exclude({ toPlainOnly: true })
   password: string;
 
-  @Exclude({ toPlainOnly: true })
-  public previousPassword: string;
-
-  @AfterLoad()
-  public loadPreviousPassword(): void {
-    this.previousPassword = this.password;
-  }
-
-  @BeforeInsert()
-  @BeforeUpdate()
-  async setPassword() {
-    if (this.previousPassword !== this.password && this.password) {
-      const salt = await bcrypt.genSalt();
-      this.password = await bcrypt.hash(this.password, salt);
-    }
-  }
-
   @Column({ default: AuthProvidersEnum.email })
   @Expose({ groups: ["me", "admin"] })
   provider: string;

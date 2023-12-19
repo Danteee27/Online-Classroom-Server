@@ -189,6 +189,9 @@ export class AuthService {
   }
 
   async register(dto: AuthRegisterLoginDto): Promise<void> {
+    const salt = await bcrypt.genSalt();
+    const password = await bcrypt.hash(dto.password, salt);
+
     const user = await this.usersService.create({
       ...dto,
       email: dto.email,
@@ -198,6 +201,7 @@ export class AuthService {
       status: {
         id: StatusEnum.inactive,
       } as Status,
+      password: password,
     });
 
     const hash = await this.jwtService.signAsync(
@@ -346,8 +350,9 @@ export class AuthService {
         HttpStatus.UNPROCESSABLE_ENTITY
       );
     }
-
-    user.password = password;
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+    user.password = hashedPassword;
 
     await this.sessionService.softDelete({
       user: {
