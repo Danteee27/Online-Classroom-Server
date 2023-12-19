@@ -59,5 +59,9 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   })
   status?: Status;
 
+  @ApiProperty({type: Boolean})
+  @IsOptional()
+  isLocked?: boolean;
+
   hash?: string | null;
 }

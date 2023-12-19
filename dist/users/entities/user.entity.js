@@ -95,6 +95,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => assignment_entity_1.Assignment, (Assignment) => Assignment.creator),
     __metadata("design:type", Array)
 ], User.prototype, "assignments", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], User.prototype, "isLocked", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

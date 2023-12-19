@@ -13,6 +13,7 @@ export declare class UpdateUserDto extends UpdateUserDto_base {
     photo?: FileEntity | null;
     role?: Role | null;
     status?: Status;
+    isLocked?: boolean;
     hash?: string | null;
 }
 export {};

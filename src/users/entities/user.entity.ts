@@ -81,4 +81,7 @@ export class User extends EntityHelper {
 
   @OneToMany(() => Assignment, (Assignment) => Assignment.creator)
   assignments: Assignment[];
+
+  @Column({ type: Boolean, default: false })
+  isLocked: boolean;
 }

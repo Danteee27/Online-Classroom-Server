@@ -20,4 +20,5 @@ export declare class User extends EntityHelper {
     deletedAt: Date;
     classMemberships: ClassMembership[];
     assignments: Assignment[];
+    isLocked: boolean;
 }

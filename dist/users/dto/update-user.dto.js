@@ -74,4 +74,9 @@ __decorate([
     }),
     __metadata("design:type", status_entity_1.Status)
 ], UpdateUserDto.prototype, "status", void 0);
+__decorate([
+    (0, swagger_2.ApiProperty)({ type: Boolean }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], UpdateUserDto.prototype, "isLocked", void 0);
 //# sourceMappingURL=update-user.dto.js.map
