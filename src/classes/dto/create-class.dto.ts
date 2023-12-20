@@ -78,3 +78,25 @@ export class CreateAssignmentDto {
   @IsNotEmpty()
   dueDate: Date;
 }
+
+export class CreateNotification {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  senderId: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  receiverId: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  title: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+}

@@ -35,6 +35,14 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: Number, nullable: true }),
     __metadata("design:type", Object)
+], ClassMembershipAssignment.prototype, "expectedGrade", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: String, nullable: true }),
+    __metadata("design:type", Object)
+], ClassMembershipAssignment.prototype, "studentExplanation", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: Number, nullable: true }),
+    __metadata("design:type", Object)
 ], ClassMembershipAssignment.prototype, "grade", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: String, nullable: true }),
@@ -43,15 +51,27 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: String, nullable: true }),
     __metadata("design:type", Object)
-], ClassMembershipAssignment.prototype, "studentReview", void 0);
+], ClassMembershipAssignment.prototype, "studentComment", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: String, nullable: true }),
     __metadata("design:type", Object)
 ], ClassMembershipAssignment.prototype, "teacherComment", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: String, nullable: true }),
+    __metadata("design:type", Object)
+], ClassMembershipAssignment.prototype, "teacherFinalisedComment", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: Boolean, default: false }),
     __metadata("design:type", Boolean)
 ], ClassMembershipAssignment.prototype, "isFinalised", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], ClassMembershipAssignment.prototype, "isRequested", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], ClassMembershipAssignment.prototype, "isReviewed", void 0);
 exports.ClassMembershipAssignment = ClassMembershipAssignment = __decorate([
     (0, typeorm_1.Entity)()
 ], ClassMembershipAssignment);

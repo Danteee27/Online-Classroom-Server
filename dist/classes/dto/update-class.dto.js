@@ -53,6 +53,12 @@ __decorate([
     __metadata("design:type", Number)
 ], UpdateClassMembershipAssignmentDto.prototype, "currentGrade", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({ example: 80 }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], UpdateClassMembershipAssignmentDto.prototype, "expectedGrade", void 0);
+__decorate([
     (0, swagger_1.ApiPropertyOptional)({ example: 90 }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
@@ -81,4 +87,14 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
 ], UpdateClassMembershipAssignmentDto.prototype, "isFinalised", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ example: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], UpdateClassMembershipAssignmentDto.prototype, "isRequested", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ example: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], UpdateClassMembershipAssignmentDto.prototype, "isReviewed", void 0);
 //# sourceMappingURL=update-class.dto.js.map

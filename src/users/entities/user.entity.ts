@@ -1,27 +1,23 @@
+import { Exclude, Expose } from "class-transformer";
+import { AuthProvidersEnum } from "src/auth/auth-providers.enum";
+import { Assignment } from "src/classes/entities/assignment.entity";
+import { ClassMembership } from "src/classes/entities/class-membership.entity";
+import { EntityHelper } from "src/utils/entity-helper";
 import {
   Column,
-  AfterLoad,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
   Index,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  BeforeInsert,
-  BeforeUpdate,
-  OneToMany,
 } from "typeorm";
+import { FileEntity } from "../../files/entities/file.entity";
 import { Role } from "../../roles/entities/role.entity";
 import { Status } from "../../statuses/entities/status.entity";
-import { FileEntity } from "../../files/entities/file.entity";
-import bcrypt from "bcryptjs";
-import { EntityHelper } from "src/utils/entity-helper";
-import { AuthProvidersEnum } from "src/auth/auth-providers.enum";
-import { Exclude, Expose } from "class-transformer";
-import { ClassMembership } from "src/classes/entities/class-membership.entity";
-import { Assignment } from "src/classes/entities/assignment.entity";
-
+import { Notification } from "src/classes/entities/notification.entity";
 @Entity()
 export class User extends EntityHelper {
   @PrimaryGeneratedColumn()
@@ -81,6 +77,12 @@ export class User extends EntityHelper {
 
   @OneToMany(() => Assignment, (Assignment) => Assignment.creator)
   assignments: Assignment[];
+
+  @OneToMany(() => Notification, (notification) => notification.sender)
+  sentNotifications: Notification[];
+
+  @OneToMany(() => Notification, (notification) => notification.receiver)
+  receivedNotifications: Notification[];
 
   @Column({ type: Boolean, default: false })
   isLocked: boolean;

@@ -10,15 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
+const class_transformer_1 = require("class-transformer");
+const auth_providers_enum_1 = require("../../auth/auth-providers.enum");
+const assignment_entity_1 = require("../../classes/entities/assignment.entity");
+const class_membership_entity_1 = require("../../classes/entities/class-membership.entity");
+const entity_helper_1 = require("../../utils/entity-helper");
 const typeorm_1 = require("typeorm");
+const file_entity_1 = require("../../files/entities/file.entity");
 const role_entity_1 = require("../../roles/entities/role.entity");
 const status_entity_1 = require("../../statuses/entities/status.entity");
-const file_entity_1 = require("../../files/entities/file.entity");
-const entity_helper_1 = require("../../utils/entity-helper");
-const auth_providers_enum_1 = require("../../auth/auth-providers.enum");
-const class_transformer_1 = require("class-transformer");
-const class_membership_entity_1 = require("../../classes/entities/class-membership.entity");
-const assignment_entity_1 = require("../../classes/entities/assignment.entity");
+const notification_entity_1 = require("../../classes/entities/notification.entity");
 let User = class User extends entity_helper_1.EntityHelper {
 };
 exports.User = User;
@@ -95,6 +96,14 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => assignment_entity_1.Assignment, (Assignment) => Assignment.creator),
     __metadata("design:type", Array)
 ], User.prototype, "assignments", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => notification_entity_1.Notification, (notification) => notification.sender),
+    __metadata("design:type", Array)
+], User.prototype, "sentNotifications", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => notification_entity_1.Notification, (notification) => notification.receiver),
+    __metadata("design:type", Array)
+], User.prototype, "receivedNotifications", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: Boolean, default: false }),
     __metadata("design:type", Boolean)

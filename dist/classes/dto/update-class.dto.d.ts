@@ -7,9 +7,12 @@ export declare class UpdateAssignmentDto {
 }
 export declare class UpdateClassMembershipAssignmentDto {
     currentGrade?: number;
+    expectedGrade?: number;
     grade?: number;
     description?: string;
     studentReview?: string;
     teacherComment?: string;
     isFinalised?: boolean;
+    isRequested?: boolean;
+    isReviewed?: boolean;
 }

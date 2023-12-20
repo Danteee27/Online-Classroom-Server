@@ -26,6 +26,9 @@ export class ClassMembershipAssignment {
   @Column({ type: Number, nullable: true })
   expectedGrade: number | null;
 
+  @Column({ type: String, nullable: true })
+  studentExplanation: string | null;
+
   @Column({ type: Number, nullable: true })
   grade: number | null;
 
@@ -33,10 +36,13 @@ export class ClassMembershipAssignment {
   description: string | null;
 
   @Column({ type: String, nullable: true })
-  studentReview: string | null;
+  studentComment: string | null;
 
   @Column({ type: String, nullable: true })
   teacherComment: string | null;
+
+  @Column({ type: String, nullable: true })
+  teacherFinalisedComment: string | null;
 
   @Column({ type: Boolean, default: false })
   isFinalised: boolean;
