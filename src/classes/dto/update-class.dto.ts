@@ -32,6 +32,11 @@ export class UpdateClassMembershipAssignmentDto {
   @IsNumber()
   currentGrade?: number;
 
+  @ApiPropertyOptional({ example: 80 })
+  @IsOptional()
+  @IsNumber()
+  expectedGrade?: number;
+
   @ApiPropertyOptional({ example: 90 })
   @IsOptional()
   @IsNumber()
@@ -55,4 +60,12 @@ export class UpdateClassMembershipAssignmentDto {
   @ApiPropertyOptional({ example: true })
   @IsOptional()
   isFinalised?: boolean;
+
+  @ApiPropertyOptional({ example: true })
+  @IsOptional()
+  isRequested?: boolean;
+
+  @ApiPropertyOptional({ example: true })
+  @IsOptional()
+  isReviewed?: boolean;
 }

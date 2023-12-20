@@ -24,6 +24,9 @@ export class ClassMembershipAssignment {
   currentGrade: number | null;
 
   @Column({ type: Number, nullable: true })
+  expectedGrade: number | null;
+
+  @Column({ type: Number, nullable: true })
   grade: number | null;
 
   @Column({ type: String, nullable: true })
@@ -37,4 +40,10 @@ export class ClassMembershipAssignment {
 
   @Column({ type: Boolean, default: false })
   isFinalised: boolean;
+
+  @Column({ type: Boolean, default: false })
+  isRequested: boolean;
+
+  @Column({ type: Boolean, default: false })
+  isReviewed: boolean;
 }
