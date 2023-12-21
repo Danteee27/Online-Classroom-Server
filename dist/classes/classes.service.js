@@ -208,6 +208,15 @@ let ClassesService = class ClassesService {
         const updatedAssignment = this.assignmentRepository.merge(assignment, updateAssignmentDto);
         return this.assignmentRepository.save(updatedAssignment);
     }
+    async getNotifciations(classMembershipId) {
+        if (!classMembershipId) {
+            throw new common_1.HttpException("Missing classMembershipId", 400);
+        }
+        return this.notificationRepository.find({
+            where: { receiver: { id: +classMembershipId } },
+            relations: ["sender", "receiver", "classMembershipAssignment"],
+        });
+    }
     async createNotification(createNotificationDto) {
         const sender = await this.classMembershipRepository.findOne({
             where: { id: +createNotificationDto.senderId },

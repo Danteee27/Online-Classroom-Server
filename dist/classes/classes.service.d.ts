@@ -28,6 +28,7 @@ export declare class ClassesService {
     createAssignment(classId: Class["id"], createAssignmentDto: CreateAssignmentDto): Promise<Assignment>;
     updateClassMembershipAssignment(classId: Class["id"], assignmentId: Assignment["id"], classMembershipId: ClassMembership["id"], updateClassMembershipAssignmentDto: Partial<ClassMembershipAssignment>): Promise<ClassMembershipAssignment>;
     updateAssignment(classId: Class["id"], assignmentId: Assignment["id"], updateAssignmentDto: UpdateAssignmentDto): Promise<Assignment>;
+    getNotifciations(classMembershipId: ClassMembership["id"]): Promise<Notification[]>;
     createNotification(createNotificationDto: CreateNotificationDto): Promise<Notification>;
     findClassMembershipAssignment(classMembershipAssignmentId: string): Promise<ClassMembershipAssignment | null>;
 }

@@ -25,45 +25,17 @@ let EventsGateway = class EventsGateway {
         this.server.on("connection", (socket) => {
             console.log("connected", socket.id);
         });
-        this.server.emit("onMessage", {
-            msg: "Client Message",
-            content: "hello",
-        });
     }
-    onNewMessage(body) {
-        this.server.emit("onMessage", {
-            msg: "New Message",
-            content: body,
+    async onStudentRequest(notification) {
+        const { senderId, receiverId, classMembershipAssignmentId, title, description, } = notification;
+        const sentNotification = await this.classesService.createNotification({
+            senderId,
+            receiverId,
+            classMembershipAssignmentId,
+            title,
+            description,
         });
-    }
-    onNewClientMessage(body) {
-        this.server.emit("onMessage", {
-            msg: "Client Message",
-            content: body,
-        });
-    }
-    onTeacherFinalise(body) {
-        this.server.emit("onMessage", {
-            msg: "Client Message",
-            content: body,
-        });
-    }
-    onTeacherReplyReview(body) {
-        this.server.emit("onMessage", {
-            msg: "Client Message",
-            content: body,
-        });
-    }
-    onStudentRequest(notification) {
-        const title = "Student Request Review";
-        console.log(notification);
-        this.server.emit("onMessage", notification);
-    }
-    onStudentReplyReview(body) {
-        this.server.emit("onMessage", {
-            msg: "Client Message",
-            content: body,
-        });
+        this.server.emit(receiverId, sentNotification);
     }
 };
 exports.EventsGateway = EventsGateway;
@@ -72,47 +44,12 @@ __decorate([
     __metadata("design:type", socket_io_1.Server)
 ], EventsGateway.prototype, "server", void 0);
 __decorate([
-    (0, websockets_1.SubscribeMessage)("message"),
-    __param(0, (0, websockets_1.MessageBody)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], EventsGateway.prototype, "onNewMessage", null);
-__decorate([
-    (0, websockets_1.SubscribeMessage)("clientMessage"),
-    __param(0, (0, websockets_1.MessageBody)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], EventsGateway.prototype, "onNewClientMessage", null);
-__decorate([
-    (0, websockets_1.SubscribeMessage)("teacherFinalise"),
-    __param(0, (0, websockets_1.MessageBody)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], EventsGateway.prototype, "onTeacherFinalise", null);
-__decorate([
-    (0, websockets_1.SubscribeMessage)("teacherReplyReview"),
-    __param(0, (0, websockets_1.MessageBody)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], EventsGateway.prototype, "onTeacherReplyReview", null);
-__decorate([
     (0, websockets_1.SubscribeMessage)("studentRequestReview"),
     __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_class_dto_1.CreateNotificationDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "onStudentRequest", null);
-__decorate([
-    (0, websockets_1.SubscribeMessage)("studentReplyReview"),
-    __param(0, (0, websockets_1.MessageBody)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], EventsGateway.prototype, "onStudentReplyReview", null);
 exports.EventsGateway = EventsGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         cors: true,

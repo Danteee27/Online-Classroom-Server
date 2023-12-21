@@ -49,6 +49,7 @@ let UsersService = class UsersService {
                 "classMemberships.classMembershipAssignments",
                 "classMemberships.classMembershipAssignments.assignment.creator",
                 "classMemberships.class",
+                "classMemberships.receivedNotifications",
             ],
         });
     }

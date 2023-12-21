@@ -22,61 +22,26 @@ export class EventsGateway implements OnModuleInit {
     this.server.on("connection", (socket) => {
       console.log("connected", socket.id);
     });
-    this.server.emit("onMessage", {
-      msg: "Client Message",
-      content: "hello",
-    });
-  }
-
-  @SubscribeMessage("message")
-  onNewMessage(@MessageBody() body: any) {
-    this.server.emit("onMessage", {
-      msg: "New Message",
-      content: body,
-    });
-  }
-
-  @SubscribeMessage("clientMessage")
-  onNewClientMessage(@MessageBody() body: any) {
-    this.server.emit("onMessage", {
-      msg: "Client Message",
-      content: body,
-    });
-  }
-
-  @SubscribeMessage("teacherFinalise")
-  onTeacherFinalise(@MessageBody() body: any) {
-    this.server.emit("onMessage", {
-      msg: "Client Message",
-      content: body,
-    });
-  }
-
-  @SubscribeMessage("teacherReplyReview")
-  onTeacherReplyReview(@MessageBody() body: any) {
-    this.server.emit("onMessage", {
-      msg: "Client Message",
-      content: body,
-    });
   }
 
   @SubscribeMessage("studentRequestReview")
-  onStudentRequest(@MessageBody() notification: CreateNotificationDto) {
-    // const classMembershipAssignment =
-    //   this.classesService.findClassMembershipAssignment("13");
+  async onStudentRequest(@MessageBody() notification: CreateNotificationDto) {
+    const {
+      senderId,
+      receiverId,
+      classMembershipAssignmentId,
+      title,
+      description,
+    } = notification;
 
-    const title = "Student Request Review";
-    console.log(notification);
-    // this.classesService.createNotification(notification);
-
-    this.server.emit("onMessage", notification);
-  }
-
-  @SubscribeMessage("studentReplyReview")
-  onStudentReplyReview(@MessageBody() body: any) {
-    this.server.emit("onMessage", {
-      msg: "Client Message",
-      content: body,
+    const sentNotification = await this.classesService.createNotification({
+      senderId,
+      receiverId,
+      classMembershipAssignmentId,
+      title,
+      description,
     });
+
+    this.server.emit(receiverId, sentNotification);
   }
 }

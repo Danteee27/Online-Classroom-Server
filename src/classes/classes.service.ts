@@ -302,6 +302,17 @@ export class ClassesService {
     return this.assignmentRepository.save(updatedAssignment);
   }
 
+  async getNotifciations(
+    classMembershipId: ClassMembership["id"]
+  ): Promise<Notification[]> {
+    if (!classMembershipId) {
+      throw new HttpException("Missing classMembershipId", 400);
+    }
+    return this.notificationRepository.find({
+      where: { receiver: { id: +classMembershipId } },
+      relations: ["sender", "receiver", "classMembershipAssignment"],
+    });
+  }
   async createNotification(
     createNotificationDto: CreateNotificationDto
   ): Promise<Notification> {

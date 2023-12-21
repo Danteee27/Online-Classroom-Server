@@ -7,10 +7,5 @@ export declare class EventsGateway implements OnModuleInit {
     constructor(classesService: ClassesService);
     server: Server;
     onModuleInit(): void;
-    onNewMessage(body: any): void;
-    onNewClientMessage(body: any): void;
-    onTeacherFinalise(body: any): void;
-    onTeacherReplyReview(body: any): void;
-    onStudentRequest(notification: CreateNotificationDto): void;
-    onStudentReplyReview(body: any): void;
+    onStudentRequest(notification: CreateNotificationDto): Promise<void>;
 }
