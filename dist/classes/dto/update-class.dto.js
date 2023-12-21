@@ -97,4 +97,9 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
 ], UpdateClassMembershipAssignmentDto.prototype, "isReviewed", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ example: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], UpdateClassMembershipAssignmentDto.prototype, "isSubmitted", void 0);
 //# sourceMappingURL=update-class.dto.js.map

@@ -13,6 +13,7 @@ exports.ClassMembershipAssignment = void 0;
 const typeorm_1 = require("typeorm");
 const assignment_entity_1 = require("./assignment.entity");
 const class_membership_entity_1 = require("./class-membership.entity");
+const notification_entity_1 = require("./notification.entity");
 let ClassMembershipAssignment = class ClassMembershipAssignment {
 };
 exports.ClassMembershipAssignment = ClassMembershipAssignment;
@@ -72,6 +73,14 @@ __decorate([
     (0, typeorm_1.Column)({ type: Boolean, default: false }),
     __metadata("design:type", Boolean)
 ], ClassMembershipAssignment.prototype, "isReviewed", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], ClassMembershipAssignment.prototype, "isSubmitted", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => notification_entity_1.Notification, (notification) => notification.classMembershipAssignment),
+    __metadata("design:type", Array)
+], ClassMembershipAssignment.prototype, "notifications", void 0);
 exports.ClassMembershipAssignment = ClassMembershipAssignment = __decorate([
     (0, typeorm_1.Entity)()
 ], ClassMembershipAssignment);

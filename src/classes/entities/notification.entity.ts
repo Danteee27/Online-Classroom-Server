@@ -1,5 +1,7 @@
 import { User } from "src/users/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { ClassMembership } from "./class-membership.entity";
+import { ClassMembershipAssignment } from "./class-membership-assignment.entity";
 
 @Entity()
 export class Notification {
@@ -12,15 +14,24 @@ export class Notification {
   @Column({ type: String })
   description: string;
 
-  @ManyToOne(() => User, (user) => user.sentNotifications, {
+  @ManyToOne(() => ClassMembership, (user) => user.sentNotifications, {
     eager: true,
   })
-  sender: User;
+  sender: ClassMembership;
 
-  @ManyToOne(() => User, (user) => user.receivedNotifications, {
+  @ManyToOne(() => ClassMembership, (user) => user.receivedNotifications, {
     eager: true,
   })
-  receiver: User;
+  receiver: ClassMembership;
+
+  @ManyToOne(
+    () => ClassMembershipAssignment,
+    (assignment) => assignment.notifications,
+    {
+      eager: true,
+    }
+  )
+  classMembershipAssignment: ClassMembershipAssignment;
 
   @Column({ type: Boolean, default: false })
   isRead: boolean;

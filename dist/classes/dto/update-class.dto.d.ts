@@ -15,4 +15,5 @@ export declare class UpdateClassMembershipAssignmentDto {
     isFinalised?: boolean;
     isRequested?: boolean;
     isReviewed?: boolean;
+    isSubmitted?: boolean;
 }

@@ -1,5 +1,6 @@
 import { Assignment } from "./assignment.entity";
 import { ClassMembership } from "./class-membership.entity";
+import { Notification } from "./notification.entity";
 export declare class ClassMembershipAssignment {
     id: number | null;
     assignment: Assignment;
@@ -15,4 +16,6 @@ export declare class ClassMembershipAssignment {
     isFinalised: boolean;
     isRequested: boolean;
     isReviewed: boolean;
+    isSubmitted: boolean;
+    notifications: Notification[];
 }

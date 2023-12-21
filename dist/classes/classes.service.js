@@ -23,14 +23,16 @@ const mail_service_1 = require("../mail/mail.service");
 const class_membership_role_enum_1 = require("./enums/class-membership-role.enum");
 const assignment_entity_1 = require("./entities/assignment.entity");
 const class_membership_assignment_entity_1 = require("./entities/class-membership-assignment.entity");
+const notification_entity_1 = require("./entities/notification.entity");
 let ClassesService = class ClassesService {
-    constructor(classRepository, usersService, mailService, classMembershipRepository, assignmentRepository, classMembershipAssignmentRepository) {
+    constructor(classRepository, usersService, mailService, classMembershipRepository, assignmentRepository, classMembershipAssignmentRepository, notificationRepository) {
         this.classRepository = classRepository;
         this.usersService = usersService;
         this.mailService = mailService;
         this.classMembershipRepository = classMembershipRepository;
         this.assignmentRepository = assignmentRepository;
         this.classMembershipAssignmentRepository = classMembershipAssignmentRepository;
+        this.notificationRepository = notificationRepository;
     }
     async create(createClassDto) {
         let classEntity = this.classRepository.create(createClassDto);
@@ -206,6 +208,36 @@ let ClassesService = class ClassesService {
         const updatedAssignment = this.assignmentRepository.merge(assignment, updateAssignmentDto);
         return this.assignmentRepository.save(updatedAssignment);
     }
+    async createNotification(createNotificationDto) {
+        const sender = await this.classMembershipRepository.findOne({
+            where: { id: +createNotificationDto.senderId },
+        });
+        if (!sender) {
+            throw new common_1.HttpException("Sender not found", 404);
+        }
+        const receiver = await this.classMembershipRepository.findOne({
+            where: { id: +createNotificationDto.receiverId },
+        });
+        if (!receiver) {
+            throw new common_1.HttpException("Receiver not found", 404);
+        }
+        const classMembershipAssignment = await this.classMembershipAssignmentRepository.findOne({
+            where: {
+                id: +createNotificationDto.classMembershipAssignmentId,
+            },
+        });
+        if (!classMembershipAssignment) {
+            throw new common_1.HttpException("ClassMembershipAssignment not found", 404);
+        }
+        const notification = this.notificationRepository.create(Object.assign(Object.assign({}, createNotificationDto), { sender,
+            receiver, createdAt: new Date() }));
+        return this.notificationRepository.save(notification);
+    }
+    findClassMembershipAssignment(classMembershipAssignmentId) {
+        return this.classMembershipAssignmentRepository.findOne({
+            where: { id: +classMembershipAssignmentId },
+        });
+    }
 };
 exports.ClassesService = ClassesService;
 exports.ClassesService = ClassesService = __decorate([
@@ -214,9 +246,11 @@ exports.ClassesService = ClassesService = __decorate([
     __param(3, (0, typeorm_1.InjectRepository)(class_membership_entity_1.ClassMembership)),
     __param(4, (0, typeorm_1.InjectRepository)(assignment_entity_1.Assignment)),
     __param(5, (0, typeorm_1.InjectRepository)(class_membership_assignment_entity_1.ClassMembershipAssignment)),
+    __param(6, (0, typeorm_1.InjectRepository)(notification_entity_1.Notification)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         users_service_1.UsersService,
         mail_service_1.MailService,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository])

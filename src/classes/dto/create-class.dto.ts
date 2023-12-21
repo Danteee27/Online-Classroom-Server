@@ -79,7 +79,7 @@ export class CreateAssignmentDto {
   dueDate: Date;
 }
 
-export class CreateNotification {
+export class CreateNotificationDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
@@ -89,6 +89,11 @@ export class CreateNotification {
   @IsString()
   @IsNotEmpty()
   receiverId: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  classMembershipAssignmentId: string;
 
   @ApiProperty()
   @IsString()

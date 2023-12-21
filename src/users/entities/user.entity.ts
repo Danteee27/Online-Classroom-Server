@@ -78,12 +78,6 @@ export class User extends EntityHelper {
   @OneToMany(() => Assignment, (Assignment) => Assignment.creator)
   assignments: Assignment[];
 
-  @OneToMany(() => Notification, (notification) => notification.sender)
-  sentNotifications: Notification[];
-
-  @OneToMany(() => Notification, (notification) => notification.receiver)
-  receivedNotifications: Notification[];
-
   @Column({ type: Boolean, default: false })
   isLocked: boolean;
 }

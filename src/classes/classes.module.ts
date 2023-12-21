@@ -10,6 +10,7 @@ import { UsersModule } from "src/users/users.module";
 import { MailModule } from "src/mail/mail.module";
 import { Assignment } from "./entities/assignment.entity";
 import { ClassMembershipAssignment } from "./entities/class-membership-assignment.entity";
+import { Notification } from "./entities/notification.entity";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ClassMembershipAssignment } from "./entities/class-membership-assignmen
       ClassMembership,
       Assignment,
       ClassMembershipAssignment,
+      Notification,
     ]),
     UsersModule,
     MailModule,

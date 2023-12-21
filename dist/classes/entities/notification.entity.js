@@ -10,8 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Notification = void 0;
-const user_entity_1 = require("../../users/entities/user.entity");
 const typeorm_1 = require("typeorm");
+const class_membership_entity_1 = require("./class-membership.entity");
+const class_membership_assignment_entity_1 = require("./class-membership-assignment.entity");
 let Notification = class Notification {
 };
 exports.Notification = Notification;
@@ -28,17 +29,23 @@ __decorate([
     __metadata("design:type", String)
 ], Notification.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.sentNotifications, {
+    (0, typeorm_1.ManyToOne)(() => class_membership_entity_1.ClassMembership, (user) => user.sentNotifications, {
         eager: true,
     }),
-    __metadata("design:type", user_entity_1.User)
+    __metadata("design:type", class_membership_entity_1.ClassMembership)
 ], Notification.prototype, "sender", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.receivedNotifications, {
+    (0, typeorm_1.ManyToOne)(() => class_membership_entity_1.ClassMembership, (user) => user.receivedNotifications, {
         eager: true,
     }),
-    __metadata("design:type", user_entity_1.User)
+    __metadata("design:type", class_membership_entity_1.ClassMembership)
 ], Notification.prototype, "receiver", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => class_membership_assignment_entity_1.ClassMembershipAssignment, (assignment) => assignment.notifications, {
+        eager: true,
+    }),
+    __metadata("design:type", class_membership_assignment_entity_1.ClassMembershipAssignment)
+], Notification.prototype, "classMembershipAssignment", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: Boolean, default: false }),
     __metadata("design:type", Boolean)

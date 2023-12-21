@@ -68,4 +68,8 @@ export class UpdateClassMembershipAssignmentDto {
   @ApiPropertyOptional({ example: true })
   @IsOptional()
   isReviewed?: boolean;
+
+  @ApiPropertyOptional({ example: true })
+  @IsOptional()
+  isSubmitted?: boolean;
 }

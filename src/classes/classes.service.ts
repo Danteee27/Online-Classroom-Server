@@ -6,6 +6,7 @@ import {
   AddClassMembershipDto,
   CreateAssignmentDto,
   CreateClassDto,
+  CreateNotificationDto,
   InviteClassMembershipDto,
 } from "./dto/create-class.dto";
 import { EntityCondition } from "src/utils/types/entity-condition.type";
@@ -18,6 +19,8 @@ import { Assignment } from "./entities/assignment.entity";
 import { ClassMembershipAssignment } from "./entities/class-membership-assignment.entity";
 import { User } from "src/users/entities/user.entity";
 import { UpdateAssignmentDto } from "./dto/update-class.dto";
+import { EventsService } from "src/events/events.service";
+import { Notification } from "./entities/notification.entity";
 
 @Injectable()
 export class ClassesService {
@@ -31,7 +34,9 @@ export class ClassesService {
     @InjectRepository(Assignment)
     private assignmentRepository: Repository<Assignment>,
     @InjectRepository(ClassMembershipAssignment)
-    private classMembershipAssignmentRepository: Repository<ClassMembershipAssignment>
+    private classMembershipAssignmentRepository: Repository<ClassMembershipAssignment>,
+    @InjectRepository(Notification)
+    private notificationRepository: Repository<Notification>
   ) {}
 
   async create(createClassDto: CreateClassDto): Promise<Class> {
@@ -295,5 +300,48 @@ export class ClassesService {
     );
 
     return this.assignmentRepository.save(updatedAssignment);
+  }
+
+  async createNotification(
+    createNotificationDto: CreateNotificationDto
+  ): Promise<Notification> {
+    const sender = await this.classMembershipRepository.findOne({
+      where: { id: +createNotificationDto.senderId },
+    });
+    if (!sender) {
+      throw new HttpException("Sender not found", 404);
+    }
+    const receiver = await this.classMembershipRepository.findOne({
+      where: { id: +createNotificationDto.receiverId },
+    });
+    if (!receiver) {
+      throw new HttpException("Receiver not found", 404);
+    }
+
+    const classMembershipAssignment =
+      await this.classMembershipAssignmentRepository.findOne({
+        where: {
+          id: +createNotificationDto.classMembershipAssignmentId,
+        },
+      });
+
+    if (!classMembershipAssignment) {
+      throw new HttpException("ClassMembershipAssignment not found", 404);
+    }
+
+    const notification = this.notificationRepository.create({
+      ...createNotificationDto,
+      sender,
+      receiver,
+      createdAt: new Date(),
+    });
+
+    return this.notificationRepository.save(notification);
+  }
+
+  findClassMembershipAssignment(classMembershipAssignmentId: string) {
+    return this.classMembershipAssignmentRepository.findOne({
+      where: { id: +classMembershipAssignmentId },
+    });
   }
 }

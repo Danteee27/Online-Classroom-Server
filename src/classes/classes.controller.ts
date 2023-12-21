@@ -126,6 +126,7 @@ export class ClassesController {
   ): Promise<Class> {
     return this.classesService.inviteClassmembership(inviteClassMembershipDto);
   }
+
   @SerializeOptions({
     groups: ["admin", "user"],
   })

@@ -19,6 +19,7 @@ const users_module_1 = require("../users/users.module");
 const mail_module_1 = require("../mail/mail.module");
 const assignment_entity_1 = require("./entities/assignment.entity");
 const class_membership_assignment_entity_1 = require("./entities/class-membership-assignment.entity");
+const notification_entity_1 = require("./entities/notification.entity");
 let ClassesModule = class ClassesModule {
 };
 exports.ClassesModule = ClassesModule;
@@ -30,6 +31,7 @@ exports.ClassesModule = ClassesModule = __decorate([
                 class_membership_entity_1.ClassMembership,
                 assignment_entity_1.Assignment,
                 class_membership_assignment_entity_1.ClassMembershipAssignment,
+                notification_entity_1.Notification,
             ]),
             users_module_1.UsersModule,
             mail_module_1.MailModule,

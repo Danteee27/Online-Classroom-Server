@@ -9,7 +9,7 @@ import { ClassMembershipRole } from "../enums/class-membership-role.enum";
 import { User } from "src/users/entities/user.entity";
 import { Class } from "./class.entity";
 import { ClassMembershipAssignment } from "./class-membership-assignment.entity";
-
+import { Notification } from "./notification.entity";
 @Entity()
 export class ClassMembership {
   @PrimaryGeneratedColumn()
@@ -37,4 +37,10 @@ export class ClassMembership {
     (classMembershipAssignment) => classMembershipAssignment.classMembership
   )
   classMembershipAssignments: ClassMembershipAssignment[];
+
+  @OneToMany(() => Notification, (notification) => notification.sender)
+  sentNotifications: Notification[];
+
+  @OneToMany(() => Notification, (notification) => notification.receiver)
+  receivedNotifications: Notification[];
 }

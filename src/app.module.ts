@@ -24,6 +24,7 @@ import { AllConfigType } from "./config/config.type";
 import { SessionModule } from "./session/session.module";
 import { MailerModule } from "./mailer/mailer.module";
 import { ClassesModule } from "./classes/classes.module";
+import { EventsModule } from "./events/events.module";
 
 @Module({
   imports: [
@@ -79,6 +80,7 @@ import { ClassesModule } from "./classes/classes.module";
     MailerModule,
     HomeModule,
     ClassesModule,
+    EventsModule,
   ],
 })
 export class AppModule {}

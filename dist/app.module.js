@@ -35,6 +35,7 @@ const typeorm_2 = require("typeorm");
 const session_module_1 = require("./session/session.module");
 const mailer_module_1 = require("./mailer/mailer.module");
 const classes_module_1 = require("./classes/classes.module");
+const events_module_1 = require("./events/events.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -93,6 +94,7 @@ exports.AppModule = AppModule = __decorate([
             mailer_module_1.MailerModule,
             home_module_1.HomeModule,
             classes_module_1.ClassesModule,
+            events_module_1.EventsModule,
         ],
     })
 ], AppModule);

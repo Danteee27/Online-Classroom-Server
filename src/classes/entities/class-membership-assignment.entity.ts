@@ -1,6 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Assignment } from "./assignment.entity";
 import { ClassMembership } from "./class-membership.entity";
+import { Notification } from "./notification.entity";
 
 @Entity()
 export class ClassMembershipAssignment {
@@ -52,4 +59,13 @@ export class ClassMembershipAssignment {
 
   @Column({ type: Boolean, default: false })
   isReviewed: boolean;
+
+  @Column({ type: Boolean, default: false })
+  isSubmitted: boolean;
+
+  @OneToMany(
+    () => Notification,
+    (notification) => notification.classMembershipAssignment
+  )
+  notifications: Notification[];
 }

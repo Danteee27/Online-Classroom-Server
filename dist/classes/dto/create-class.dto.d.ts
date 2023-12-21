@@ -21,9 +21,10 @@ export declare class CreateAssignmentDto {
     maxGrade: number;
     dueDate: Date;
 }
-export declare class CreateNotification {
+export declare class CreateNotificationDto {
     senderId: string;
     receiverId: string;
+    classMembershipAssignmentId: string;
     title: string;
     description: string;
 }
