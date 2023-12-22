@@ -8,6 +8,7 @@ import { UsersService } from "src/users/users.service";
 import { MailService } from "src/mail/mail.service";
 import { Assignment } from "./entities/assignment.entity";
 import { ClassMembershipAssignment } from "./entities/class-membership-assignment.entity";
+import { User } from "src/users/entities/user.entity";
 import { UpdateAssignmentDto } from "./dto/update-class.dto";
 import { Notification } from "./entities/notification.entity";
 export declare class ClassesService {
@@ -29,7 +30,7 @@ export declare class ClassesService {
     createClassMembershipAssignment(classId: Class["id"], createClassMembershipAssignmentDto: CreateClassMembershipAssignmentDto): Promise<ClassMembershipAssignment>;
     updateClassMembershipAssignment(classId: Class["id"], assignmentId: Assignment["id"], classMembershipId: ClassMembership["id"], updateClassMembershipAssignmentDto: Partial<ClassMembershipAssignment>): Promise<ClassMembershipAssignment>;
     updateAssignment(classId: Class["id"], assignmentId: Assignment["id"], updateAssignmentDto: UpdateAssignmentDto): Promise<Assignment>;
-    getNotifciations(classMembershipId: ClassMembership["id"]): Promise<Notification[]>;
+    getNotifciations(userId: User["id"]): Promise<Notification[]>;
     createNotification(createNotificationDto: CreateNotificationDto): Promise<Notification>;
     findClassMembershipAssignment(classMembershipAssignmentId: string): Promise<ClassMembershipAssignment | null>;
 }

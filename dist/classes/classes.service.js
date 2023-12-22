@@ -225,16 +225,25 @@ let ClassesService = class ClassesService {
         const updatedAssignment = this.assignmentRepository.merge(assignment, updateAssignmentDto);
         return this.assignmentRepository.save(updatedAssignment);
     }
-    async getNotifciations(classMembershipId) {
-        if (!classMembershipId) {
-            throw new common_1.HttpException("Missing classMembershipId", 400);
-        }
-        return this.notificationRepository.find({
-            where: { receiver: { id: +classMembershipId } },
-            relations: ["sender", "receiver", "classMembershipAssignment"],
+    async getNotifciations(userId) {
+        const user = await this.usersService.findOne({
+            id: +userId,
         });
+        if (!user) {
+            throw new common_1.HttpException("User not found", 404);
+        }
+        const classMemberships = user.classMemberships;
+        let notifications = [];
+        classMemberships.forEach((classMembership) => {
+            notifications = [
+                ...notifications,
+                ...classMembership.receivedNotifications,
+            ];
+        });
+        return notifications;
     }
     async createNotification(createNotificationDto) {
+        console.log(createNotificationDto);
         console.log("debug1");
         const sender = await this.classMembershipRepository.findOne({
             where: { id: +createNotificationDto.senderId },
@@ -242,12 +251,14 @@ let ClassesService = class ClassesService {
         if (!sender) {
             throw new common_1.HttpException("Sender not found", 404);
         }
+        console.log("debug2");
         const receiver = await this.classMembershipRepository.findOne({
             where: { id: +createNotificationDto.receiverId },
         });
         if (!receiver) {
             throw new common_1.HttpException("Receiver not found", 404);
         }
+        console.log("debug3");
         const classMembershipAssignment = await this.classMembershipAssignmentRepository.findOne({
             where: {
                 id: +createNotificationDto.classMembershipAssignmentId,

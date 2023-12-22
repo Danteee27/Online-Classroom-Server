@@ -31,6 +31,9 @@ let ClassesController = class ClassesController {
     createAssignment(id, createAssignmentDto) {
         return this.classesService.createAssignment(+id, createAssignmentDto);
     }
+    findUserNotifications(userId) {
+        return this.classesService.getNotifciations(+userId);
+    }
     updateAssignment(id, assignmentId, updateAssignmentDto) {
         return this.classesService.updateAssignment(+id, +assignmentId, updateAssignmentDto);
     }
@@ -90,6 +93,17 @@ __decorate([
     __metadata("design:paramtypes", [String, create_class_dto_1.CreateAssignmentDto]),
     __metadata("design:returntype", Promise)
 ], ClassesController.prototype, "createAssignment", null);
+__decorate([
+    (0, common_1.SerializeOptions)({
+        groups: ["admin", "user"],
+    }),
+    (0, common_1.Get)("user/:userId/notifications"),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Param)("userId")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ClassesController.prototype, "findUserNotifications", null);
 __decorate([
     (0, common_1.SerializeOptions)({
         groups: ["admin", "user"],

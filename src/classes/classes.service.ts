@@ -386,20 +386,33 @@ export class ClassesService {
     return this.assignmentRepository.save(updatedAssignment);
   }
 
-  async getNotifciations(
-    classMembershipId: ClassMembership["id"]
-  ): Promise<Notification[]> {
-    if (!classMembershipId) {
-      throw new HttpException("Missing classMembershipId", 400);
-    }
-    return this.notificationRepository.find({
-      where: { receiver: { id: +classMembershipId } },
-      relations: ["sender", "receiver", "classMembershipAssignment"],
+  async getNotifciations(userId: User["id"]): Promise<Notification[]> {
+    const user = await this.usersService.findOne({
+      id: +userId,
     });
+
+    if (!user) {
+      throw new HttpException("User not found", 404);
+    }
+
+    const classMemberships = user.classMemberships;
+
+    let notifications: Notification[] = [];
+
+    classMemberships.forEach((classMembership) => {
+      notifications = [
+        ...notifications,
+        ...classMembership.receivedNotifications,
+      ];
+    });
+
+    return notifications;
   }
+
   async createNotification(
     createNotificationDto: CreateNotificationDto
   ): Promise<Notification> {
+    console.log(createNotificationDto);
     console.log("debug1");
 
     const sender = await this.classMembershipRepository.findOne({
@@ -408,12 +421,17 @@ export class ClassesService {
     if (!sender) {
       throw new HttpException("Sender not found", 404);
     }
+
+    console.log("debug2");
+
     const receiver = await this.classMembershipRepository.findOne({
       where: { id: +createNotificationDto.receiverId },
     });
     if (!receiver) {
       throw new HttpException("Receiver not found", 404);
     }
+
+    console.log("debug3");
 
     const classMembershipAssignment =
       await this.classMembershipAssignmentRepository.findOne({

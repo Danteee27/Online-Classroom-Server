@@ -69,6 +69,15 @@ export class ClassesController {
   @SerializeOptions({
     groups: ["admin", "user"],
   })
+  @Get("user/:userId/notifications")
+  @HttpCode(HttpStatus.OK)
+  findUserNotifications(@Param("userId") userId: string) {
+    return this.classesService.getNotifciations(+userId);
+  }
+
+  @SerializeOptions({
+    groups: ["admin", "user"],
+  })
   @Put(":id/assignments/:assignmentId")
   @HttpCode(HttpStatus.OK)
   updateAssignment(

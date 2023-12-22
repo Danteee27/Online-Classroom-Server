@@ -36,14 +36,14 @@ export class EventsGateway implements OnModuleInit {
 
     console.log("notification", notification);
 
-    const sentNotification = await this.classesService.createNotification({
-      senderId,
-      receiverId,
-      classMembershipAssignmentId,
-      title,
-      description,
-    });
+    // const sentNotification = await this.classesService.createNotification({
+    //   senderId,
+    //   receiverId,
+    //   classMembershipAssignmentId,
+    //   title,
+    //   description,
+    // });
 
-    this.server.emit(receiverId, sentNotification);
+    this.server.emit(receiverId, "hi");
   }
 }
