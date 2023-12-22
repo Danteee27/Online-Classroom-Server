@@ -5,10 +5,9 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Class } from "./class.entity";
-import { User } from "src/users/entities/user.entity";
 import { ClassMembershipAssignment } from "./class-membership-assignment.entity";
-import e from "express";
+import { ClassMembership } from "./class-membership.entity";
+import { Class } from "./class.entity";
 
 @Entity()
 export class Assignment {
@@ -20,10 +19,14 @@ export class Assignment {
   })
   class: Class;
 
-  @ManyToOne(() => User, (user) => user.assignments, {
-    eager: true,
-  })
-  creator: User;
+  @ManyToOne(
+    () => ClassMembership,
+    (classMembership) => classMembership.assignments,
+    {
+      eager: true,
+    }
+  )
+  creator: ClassMembership;
 
   @Column({ type: Number })
   maxGrade: number;

@@ -16,6 +16,7 @@ const user_entity_1 = require("../../users/entities/user.entity");
 const class_entity_1 = require("./class.entity");
 const class_membership_assignment_entity_1 = require("./class-membership-assignment.entity");
 const notification_entity_1 = require("./notification.entity");
+const assignment_entity_1 = require("./assignment.entity");
 let ClassMembership = class ClassMembership {
 };
 exports.ClassMembership = ClassMembership;
@@ -55,6 +56,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => notification_entity_1.Notification, (notification) => notification.receiver),
     __metadata("design:type", Array)
 ], ClassMembership.prototype, "receivedNotifications", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => assignment_entity_1.Assignment, (assignment) => assignment.creator),
+    __metadata("design:type", Array)
+], ClassMembership.prototype, "assignments", void 0);
 exports.ClassMembership = ClassMembership = __decorate([
     (0, typeorm_1.Entity)()
 ], ClassMembership);

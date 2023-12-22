@@ -24,7 +24,7 @@ export class EventsGateway implements OnModuleInit {
     });
   }
 
-  @SubscribeMessage("studentRequestReview")
+  @SubscribeMessage("clientNotification")
   async onStudentRequest(@MessageBody() notification: CreateNotificationDto) {
     const {
       senderId,
@@ -33,6 +33,8 @@ export class EventsGateway implements OnModuleInit {
       title,
       description,
     } = notification;
+
+    console.log("notification", notification);
 
     const sentNotification = await this.classesService.createNotification({
       senderId,

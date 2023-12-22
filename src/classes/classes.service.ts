@@ -6,6 +6,7 @@ import {
   AddClassMembershipDto,
   CreateAssignmentDto,
   CreateClassDto,
+  CreateClassMembershipAssignmentDto,
   CreateNotificationDto,
   InviteClassMembershipDto,
 } from "./dto/create-class.dto";
@@ -202,12 +203,14 @@ export class ClassesService {
         "classMemberships.classMembershipAssignments",
       ],
     });
+
     if (!classEntity) {
       throw new HttpException("Class not found", 404);
     }
 
-    let creator = await this.usersService.findOne({
-      id: +createAssignmentDto.creatorId,
+    let creator = await this.classMembershipRepository.findOne({
+      where: { id: +createAssignmentDto.creatorId },
+      relations: ["assignments"],
     });
 
     if (!creator) {
@@ -220,31 +223,112 @@ export class ClassesService {
       creator: creator,
       createdDate: new Date(),
     });
-    await this.assignmentRepository.save(assignment);
 
-    classEntity.assignments = [...classEntity.assignments, assignment];
-    creator.assignments = [...creator.assignments, assignment];
+    return await this.assignmentRepository.save(assignment);
+  }
 
-    classEntity.classMemberships.forEach(async (classMembership) => {
-      let classMembershipAssignment =
-        await this.classMembershipAssignmentRepository.save(
-          this.classMembershipAssignmentRepository.create({
-            classMembership,
-            assignment,
-          })
-        );
-      classMembership.classMembershipAssignments = [
-        ...classMembership.classMembershipAssignments,
-        classMembershipAssignment,
-      ];
+  async createClassMembershipAssignment(
+    classId: Class["id"],
+    createClassMembershipAssignmentDto: CreateClassMembershipAssignmentDto
+  ) {
+    let classEntity = await this.classRepository.findOne({
+      where: { id: +classId },
+      relations: [
+        "classMemberships",
+        "assignments",
+        "classMemberships.classMembershipAssignments",
+      ],
     });
 
-    await this.classRepository.save(classEntity);
-    await this.usersService.update(creator.id, creator);
-    await this.classMembershipRepository.save(classEntity.classMemberships);
+    if (!classEntity) {
+      throw new HttpException("Class not found", 404);
+    }
 
-    return assignment;
+    let classMembership = await this.classMembershipRepository.findOne({
+      where: { id: +createClassMembershipAssignmentDto.classMembershipId },
+      relations: ["classMembershipAssignments"],
+    });
+
+    if (!classMembership) {
+      throw new HttpException("ClassMembership not found", 404);
+    }
+
+    let assignment = await this.assignmentRepository.findOne({
+      where: { id: +createClassMembershipAssignmentDto.assignmentId },
+      relations: ["classMembershipAssignments"],
+    });
+
+    if (!assignment) {
+      throw new HttpException("Assignment not found", 404);
+    }
+
+    let classMembershipAssignment =
+      this.classMembershipAssignmentRepository.create({
+        classMembership,
+        assignment,
+      });
+
+    return await this.classMembershipAssignmentRepository.save(
+      classMembershipAssignment
+    );
   }
+
+  // async createAssignment(
+  //   classId: Class["id"],
+  //   createAssignmentDto: CreateAssignmentDto
+  // ): Promise<Assignment> {
+  //   let classEntity = await this.classRepository.findOne({
+  //     where: { id: +classId },
+  //     relations: [
+  //       "classMemberships",
+  //       "assignments",
+  //       "classMemberships.classMembershipAssignments",
+  //     ],
+  //   });
+  //   if (!classEntity) {
+  //     throw new HttpException("Class not found", 404);
+  //   }
+
+  //   let creator = await this.classMembershipRepository.findOne({
+  //     where: { id: +createAssignmentDto.creatorId },
+  //     relations: ["assignments"],
+  //   });
+
+  //   if (!creator) {
+  //     throw new HttpException("Creator not found", 404);
+  //   }
+
+  //   let assignment = this.assignmentRepository.create({
+  //     ...createAssignmentDto,
+  //     class: classEntity,
+  //     creator: creator,
+  //     createdDate: new Date(),
+  //   });
+  //   await this.assignmentRepository.save(assignment);
+
+  //   classEntity.assignments = [...classEntity.assignments, assignment];
+  //   creator.assignments = [...creator.assignments, assignment];
+
+  //   classEntity.classMemberships.forEach(async (classMembership) => {
+  //     let classMembershipAssignment =
+  //       await this.classMembershipAssignmentRepository.save(
+  //         this.classMembershipAssignmentRepository.create({
+  //           classMembership,
+  //           assignment,
+  //         })
+  //       );
+  //     classMembership.classMembershipAssignments = [
+  //       ...classMembership.classMembershipAssignments,
+  //       classMembershipAssignment,
+  //     ];
+  //   });
+
+  //   await this.classRepository.save(classEntity);
+  //   await this.classMembershipRepository.save(creator);
+  //   await this.classMembershipRepository.save(classEntity.classMemberships);
+
+  //   return assignment;
+  // }
 
   async updateClassMembershipAssignment(
     classId: Class["id"],
@@ -316,6 +400,8 @@ export class ClassesService {
   async createNotification(
     createNotificationDto: CreateNotificationDto
   ): Promise<Notification> {
+    console.log("debug1");
+
     const sender = await this.classMembershipRepository.findOne({
       where: { id: +createNotificationDto.senderId },
     });
@@ -340,8 +426,12 @@ export class ClassesService {
       throw new HttpException("ClassMembershipAssignment not found", 404);
     }
 
+    console.log("debug1");
+
     const notification = this.notificationRepository.create({
-      ...createNotificationDto,
+      title: createNotificationDto.title,
+      description: createNotificationDto.description,
+      classMembershipAssignment,
       sender,
       receiver,
       createdAt: new Date(),

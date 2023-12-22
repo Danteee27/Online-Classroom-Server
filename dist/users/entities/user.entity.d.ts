@@ -1,4 +1,3 @@
-import { Assignment } from "src/classes/entities/assignment.entity";
 import { ClassMembership } from "src/classes/entities/class-membership.entity";
 import { EntityHelper } from "src/utils/entity-helper";
 import { FileEntity } from "../../files/entities/file.entity";
@@ -19,6 +18,5 @@ export declare class User extends EntityHelper {
     updatedAt: Date;
     deletedAt: Date;
     classMemberships: ClassMembership[];
-    assignments: Assignment[];
     isLocked: boolean;
 }

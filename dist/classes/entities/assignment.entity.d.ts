@@ -1,10 +1,10 @@
-import { Class } from "./class.entity";
-import { User } from "src/users/entities/user.entity";
 import { ClassMembershipAssignment } from "./class-membership-assignment.entity";
+import { ClassMembership } from "./class-membership.entity";
+import { Class } from "./class.entity";
 export declare class Assignment {
     id: number | null;
     class: Class;
-    creator: User;
+    creator: ClassMembership;
     maxGrade: number;
     name: string;
     description: string;

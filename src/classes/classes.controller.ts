@@ -59,7 +59,7 @@ export class ClassesController {
   })
   @Post(":id/assignments")
   @HttpCode(HttpStatus.CREATED)
-  createAssigment(
+  createAssignment(
     @Param("id") id: string,
     @Body() createAssignmentDto: CreateAssignmentDto
   ): Promise<Assignment> {
@@ -71,7 +71,7 @@ export class ClassesController {
   })
   @Put(":id/assignments/:assignmentId")
   @HttpCode(HttpStatus.OK)
-  updateAssigment(
+  updateAssignment(
     @Param("id") id: string,
     @Param("assignmentId") assignmentId: string,
     @Body() updateAssignmentDto: UpdateAssignmentDto
@@ -102,6 +102,22 @@ export class ClassesController {
       +classMembershipId,
       updateClassMembershipAssignmentDto
     );
+  }
+
+  @SerializeOptions({
+    groups: ["admin", "user"],
+  })
+  @Post(":classId/classMemberships/:classMembershipId/assignment/:assignmentId")
+  @HttpCode(HttpStatus.CREATED)
+  addClassMembershipAssignment(
+    @Param("classId") classId: string,
+    @Param("assignmentId") assignmentId: string,
+    @Param("classMembershipId") classMembershipId: string
+  ): Promise<ClassMembershipAssignment> {
+    return this.classesService.createClassMembershipAssignment(+classId, {
+      assignmentId,
+      classMembershipId,
+    });
   }
 
   @SerializeOptions({

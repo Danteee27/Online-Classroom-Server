@@ -11,9 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Assignment = void 0;
 const typeorm_1 = require("typeorm");
-const class_entity_1 = require("./class.entity");
-const user_entity_1 = require("../../users/entities/user.entity");
 const class_membership_assignment_entity_1 = require("./class-membership-assignment.entity");
+const class_membership_entity_1 = require("./class-membership.entity");
+const class_entity_1 = require("./class.entity");
 let Assignment = class Assignment {
 };
 exports.Assignment = Assignment;
@@ -28,10 +28,10 @@ __decorate([
     __metadata("design:type", class_entity_1.Class)
 ], Assignment.prototype, "class", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.assignments, {
+    (0, typeorm_1.ManyToOne)(() => class_membership_entity_1.ClassMembership, (classMembership) => classMembership.assignments, {
         eager: true,
     }),
-    __metadata("design:type", user_entity_1.User)
+    __metadata("design:type", class_membership_entity_1.ClassMembership)
 ], Assignment.prototype, "creator", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: Number }),

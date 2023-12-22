@@ -57,11 +57,10 @@ export class UsersService {
       relations: [
         "role",
         "classMemberships",
-        "assignments",
         "classMemberships.classMembershipAssignments",
-        "classMemberships.classMembershipAssignments.assignment.creator",
         "classMemberships.class",
         "classMemberships.receivedNotifications",
+        "classMemberships.assignments",
       ],
     });
   }

@@ -79,6 +79,18 @@ export class CreateAssignmentDto {
   dueDate: Date;
 }
 
+export class CreateClassMembershipAssignmentDto {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  classMembershipId: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  assignmentId: string;
+}
+
 export class CreateNotificationDto {
   @ApiProperty()
   @IsString()

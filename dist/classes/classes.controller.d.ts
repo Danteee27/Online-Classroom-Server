@@ -10,9 +10,10 @@ export declare class ClassesController {
     constructor(classesService: ClassesService);
     create(createClassDto: CreateClassDto): Promise<Class>;
     findAll(): Promise<NullableType<Class[]>>;
-    createAssigment(id: string, createAssignmentDto: CreateAssignmentDto): Promise<Assignment>;
-    updateAssigment(id: string, assignmentId: string, updateAssignmentDto: UpdateAssignmentDto): Promise<Assignment>;
+    createAssignment(id: string, createAssignmentDto: CreateAssignmentDto): Promise<Assignment>;
+    updateAssignment(id: string, assignmentId: string, updateAssignmentDto: UpdateAssignmentDto): Promise<Assignment>;
     updateClassMembershipAssignment(classId: string, assignmentId: string, classMembershipId: string, updateClassMembershipAssignmentDto: UpdateClassMembershipAssignmentDto): Promise<ClassMembershipAssignment>;
+    addClassMembershipAssignment(classId: string, assignmentId: string, classMembershipId: string): Promise<ClassMembershipAssignment>;
     addClassMember(id: string, createClassMemberDto: AddClassMembershipDto): Promise<Class>;
     inviteClassMember(inviteClassMembershipDto: InviteClassMembershipDto): Promise<Class>;
     findByClassCode(classCode: string): Promise<NullableType<Class>>;

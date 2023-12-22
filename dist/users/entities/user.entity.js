@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const class_transformer_1 = require("class-transformer");
 const auth_providers_enum_1 = require("../../auth/auth-providers.enum");
-const assignment_entity_1 = require("../../classes/entities/assignment.entity");
 const class_membership_entity_1 = require("../../classes/entities/class-membership.entity");
 const entity_helper_1 = require("../../utils/entity-helper");
 const typeorm_1 = require("typeorm");
@@ -91,10 +90,6 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => class_membership_entity_1.ClassMembership, (classMembership) => classMembership.user),
     __metadata("design:type", Array)
 ], User.prototype, "classMemberships", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => assignment_entity_1.Assignment, (Assignment) => Assignment.creator),
-    __metadata("design:type", Array)
-], User.prototype, "assignments", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: Boolean, default: false }),
     __metadata("design:type", Boolean)

@@ -1,6 +1,5 @@
 import { Exclude, Expose } from "class-transformer";
 import { AuthProvidersEnum } from "src/auth/auth-providers.enum";
-import { Assignment } from "src/classes/entities/assignment.entity";
 import { ClassMembership } from "src/classes/entities/class-membership.entity";
 import { EntityHelper } from "src/utils/entity-helper";
 import {
@@ -17,7 +16,6 @@ import {
 import { FileEntity } from "../../files/entities/file.entity";
 import { Role } from "../../roles/entities/role.entity";
 import { Status } from "../../statuses/entities/status.entity";
-import { Notification } from "src/classes/entities/notification.entity";
 @Entity()
 export class User extends EntityHelper {
   @PrimaryGeneratedColumn()
@@ -74,9 +72,6 @@ export class User extends EntityHelper {
 
   @OneToMany(() => ClassMembership, (classMembership) => classMembership.user)
   classMemberships: ClassMembership[];
-
-  @OneToMany(() => Assignment, (Assignment) => Assignment.creator)
-  assignments: Assignment[];
 
   @Column({ type: Boolean, default: false })
   isLocked: boolean;

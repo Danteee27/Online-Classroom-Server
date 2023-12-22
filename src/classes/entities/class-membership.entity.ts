@@ -10,6 +10,7 @@ import { User } from "src/users/entities/user.entity";
 import { Class } from "./class.entity";
 import { ClassMembershipAssignment } from "./class-membership-assignment.entity";
 import { Notification } from "./notification.entity";
+import { Assignment } from "./assignment.entity";
 @Entity()
 export class ClassMembership {
   @PrimaryGeneratedColumn()
@@ -43,4 +44,7 @@ export class ClassMembership {
 
   @OneToMany(() => Notification, (notification) => notification.receiver)
   receivedNotifications: Notification[];
+
+  @OneToMany(() => Assignment, (assignment) => assignment.creator)
+  assignments: Assignment[];
 }

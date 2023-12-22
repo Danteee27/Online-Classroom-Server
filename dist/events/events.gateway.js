@@ -28,6 +28,7 @@ let EventsGateway = class EventsGateway {
     }
     async onStudentRequest(notification) {
         const { senderId, receiverId, classMembershipAssignmentId, title, description, } = notification;
+        console.log("notification", notification);
         const sentNotification = await this.classesService.createNotification({
             senderId,
             receiverId,
@@ -44,7 +45,7 @@ __decorate([
     __metadata("design:type", socket_io_1.Server)
 ], EventsGateway.prototype, "server", void 0);
 __decorate([
-    (0, websockets_1.SubscribeMessage)("studentRequestReview"),
+    (0, websockets_1.SubscribeMessage)("clientNotification"),
     __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_class_dto_1.CreateNotificationDto]),

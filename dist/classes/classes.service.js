@@ -154,30 +154,47 @@ let ClassesService = class ClassesService {
         if (!classEntity) {
             throw new common_1.HttpException("Class not found", 404);
         }
-        let creator = await this.usersService.findOne({
-            id: +createAssignmentDto.creatorId,
+        let creator = await this.classMembershipRepository.findOne({
+            where: { id: +createAssignmentDto.creatorId },
+            relations: ["assignments"],
         });
         if (!creator) {
             throw new common_1.HttpException("Creator not found", 404);
         }
         let assignment = this.assignmentRepository.create(Object.assign(Object.assign({}, createAssignmentDto), { class: classEntity, creator: creator, createdDate: new Date() }));
-        await this.assignmentRepository.save(assignment);
-        classEntity.assignments = [...classEntity.assignments, assignment];
-        creator.assignments = [...creator.assignments, assignment];
-        classEntity.classMemberships.forEach(async (classMembership) => {
-            let classMembershipAssignment = await this.classMembershipAssignmentRepository.save(this.classMembershipAssignmentRepository.create({
-                classMembership,
-                assignment,
-            }));
-            classMembership.classMembershipAssignments = [
-                ...classMembership.classMembershipAssignments,
-                classMembershipAssignment,
-            ];
+        return await this.assignmentRepository.save(assignment);
+    }
+    async createClassMembershipAssignment(classId, createClassMembershipAssignmentDto) {
+        let classEntity = await this.classRepository.findOne({
+            where: { id: +classId },
+            relations: [
+                "classMemberships",
+                "assignments",
+                "classMemberships.classMembershipAssignments",
+            ],
         });
-        await this.classRepository.save(classEntity);
-        await this.usersService.update(creator.id, creator);
-        await this.classMembershipRepository.save(classEntity.classMemberships);
-        return assignment;
+        if (!classEntity) {
+            throw new common_1.HttpException("Class not found", 404);
+        }
+        let classMembership = await this.classMembershipRepository.findOne({
+            where: { id: +createClassMembershipAssignmentDto.classMembershipId },
+            relations: ["classMembershipAssignments"],
+        });
+        if (!classMembership) {
+            throw new common_1.HttpException("ClassMembership not found", 404);
+        }
+        let assignment = await this.assignmentRepository.findOne({
+            where: { id: +createClassMembershipAssignmentDto.assignmentId },
+            relations: ["classMembershipAssignments"],
+        });
+        if (!assignment) {
+            throw new common_1.HttpException("Assignment not found", 404);
+        }
+        let classMembershipAssignment = this.classMembershipAssignmentRepository.create({
+            classMembership,
+            assignment,
+        });
+        return await this.classMembershipAssignmentRepository.save(classMembershipAssignment);
     }
     async updateClassMembershipAssignment(classId, assignmentId, classMembershipId, updateClassMembershipAssignmentDto) {
         if (!assignmentId || !classMembershipId) {
@@ -218,6 +235,7 @@ let ClassesService = class ClassesService {
         });
     }
     async createNotification(createNotificationDto) {
+        console.log("debug1");
         const sender = await this.classMembershipRepository.findOne({
             where: { id: +createNotificationDto.senderId },
         });
@@ -238,8 +256,15 @@ let ClassesService = class ClassesService {
         if (!classMembershipAssignment) {
             throw new common_1.HttpException("ClassMembershipAssignment not found", 404);
         }
-        const notification = this.notificationRepository.create(Object.assign(Object.assign({}, createNotificationDto), { sender,
-            receiver, createdAt: new Date() }));
+        console.log("debug1");
+        const notification = this.notificationRepository.create({
+            title: createNotificationDto.title,
+            description: createNotificationDto.description,
+            classMembershipAssignment,
+            sender,
+            receiver,
+            createdAt: new Date(),
+        });
         return this.notificationRepository.save(notification);
     }
     findClassMembershipAssignment(classMembershipAssignmentId) {
