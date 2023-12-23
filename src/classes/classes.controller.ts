@@ -23,6 +23,7 @@ import { Class } from "./entities/class.entity";
 import { Assignment } from "./entities/assignment.entity";
 import {
   UpdateAssignmentDto,
+  UpdateClassDto,
   UpdateClassMembershipAssignmentDto,
   UpdateClassMembershipDto,
 } from "./dto/update-class.dto";
@@ -55,6 +56,18 @@ export class ClassesController {
   @HttpCode(HttpStatus.OK)
   findAll(): Promise<NullableType<Class[]>> {
     return this.classesService.findAll();
+  }
+
+  @SerializeOptions({
+    groups: ["admin", "user"],
+  })
+  @Put(":classId")
+  @HttpCode(HttpStatus.OK)
+  update(
+    @Param("classId") classId: string,
+    @Body() updateClassDto: UpdateClassDto
+  ): Promise<Class> {
+    return this.classesService.updateClass(+classId, updateClassDto);
   }
 
   @SerializeOptions({

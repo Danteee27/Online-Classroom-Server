@@ -28,6 +28,9 @@ let ClassesController = class ClassesController {
     findAll() {
         return this.classesService.findAll();
     }
+    update(classId, updateClassDto) {
+        return this.classesService.updateClass(+classId, updateClassDto);
+    }
     createAssignment(id, createAssignmentDto) {
         return this.classesService.createAssignment(+id, createAssignmentDto);
     }
@@ -93,6 +96,18 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ClassesController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.SerializeOptions)({
+        groups: ["admin", "user"],
+    }),
+    (0, common_1.Put)(":classId"),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Param)("classId")),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, update_class_dto_1.UpdateClassDto]),
+    __metadata("design:returntype", Promise)
+], ClassesController.prototype, "update", null);
 __decorate([
     (0, common_1.SerializeOptions)({
         groups: ["admin", "user"],
