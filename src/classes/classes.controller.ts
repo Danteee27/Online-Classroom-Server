@@ -17,6 +17,7 @@ import {
   CreateClassDto,
   CreateClassMembershipDto,
   InviteClassMembershipDto,
+  MapUserToClassMembershipDto,
 } from "./dto/create-class.dto";
 import { Class } from "./entities/class.entity";
 import { Assignment } from "./entities/assignment.entity";
@@ -44,7 +45,7 @@ export class ClassesController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createClassDto: CreateClassDto): Promise<Class> {
-    return this.classesService.create(createClassDto);
+    return this.classesService.createClass(createClassDto);
   }
 
   @SerializeOptions({
@@ -112,6 +113,19 @@ export class ClassesController {
       +assignmentId,
       +classMembershipId,
       updateClassMembershipAssignmentDto
+    );
+  }
+
+  @SerializeOptions({
+    groups: ["admin", "user"],
+  })
+  @Post("/mapUserToClassMembership")
+  @HttpCode(HttpStatus.CREATED)
+  mapUserToClassMembership(
+    @Body() mapUserToClassMembershipDto: MapUserToClassMembershipDto
+  ): Promise<ClassMembership[]> {
+    return this.classesService.mapUserToClassMembership(
+      mapUserToClassMembershipDto
     );
   }
 

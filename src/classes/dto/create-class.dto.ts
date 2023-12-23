@@ -30,6 +30,11 @@ export class CreateClassMembershipDto {
   @ApiProperty()
   @IsEnum(ClassMembershipRole)
   role: ClassMembershipRole;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  studentId: string;
 }
 
 export class InviteClassMembershipDto {
@@ -116,4 +121,16 @@ export class CreateNotificationDto {
   @IsString()
   @IsNotEmpty()
   description: string;
+}
+
+export class MapUserToClassMembershipDto {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  userId: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  studentId: string;
 }

@@ -9,6 +9,7 @@ import {
   CreateClassMembershipDto,
   CreateNotificationDto,
   InviteClassMembershipDto,
+  MapUserToClassMembershipDto,
 } from "./dto/create-class.dto";
 import { EntityCondition } from "src/utils/types/entity-condition.type";
 import { NullableType } from "src/utils/types/nullable.type";
@@ -21,6 +22,8 @@ import { ClassMembershipAssignment } from "./entities/class-membership-assignmen
 import { User } from "src/users/entities/user.entity";
 import {
   UpdateAssignmentDto,
+  UpdateClassDto,
+  UpdateClassMembershipAssignmentDto,
   UpdateClassMembershipDto,
 } from "./dto/update-class.dto";
 import { EventsService } from "src/events/events.service";
@@ -43,7 +46,7 @@ export class ClassesService {
     private notificationRepository: Repository<Notification>
   ) {}
 
-  async create(createClassDto: CreateClassDto): Promise<Class> {
+  async createClass(createClassDto: CreateClassDto): Promise<Class> {
     let classEntity = this.classRepository.create(createClassDto);
     classEntity = await this.classRepository.save(classEntity);
 
@@ -68,6 +71,22 @@ export class ClassesService {
     await this.classMembershipRepository.save(classMembership);
 
     return classEntity;
+  }
+
+  async updateClass(
+    classId: Class["id"],
+    updateClassDto: UpdateClassDto
+  ): Promise<Class> {
+    let classEntity = await this.classRepository.findOne({
+      where: { id: +classId },
+    });
+    if (!classEntity) {
+      throw new HttpException("Class not found", 404);
+    }
+
+    classEntity = this.classRepository.merge(classEntity, updateClassDto);
+
+    return await this.classRepository.save(classEntity);
   }
 
   findAll(): Promise<NullableType<Class[]>> {
@@ -100,6 +119,7 @@ export class ClassesService {
         class: classEntity,
         role: createClassMembershipDto.role,
         fullName: createClassMembershipDto.fullName,
+        studentId: createClassMembershipDto.studentId,
       })
     );
     classEntity.classMemberships.push(classMembership);
@@ -144,6 +164,39 @@ export class ClassesService {
     }
 
     return this.classMembershipRepository.save(classMembership);
+  }
+
+  async mapUserToClassMembership(
+    mapUserToClassMembershipDto: MapUserToClassMembershipDto
+  ): Promise<ClassMembership[]> {
+    const { userId, studentId } = mapUserToClassMembershipDto;
+
+    if (!userId) {
+      throw new HttpException("Missing userId", 400);
+    }
+    const user = await this.usersService.findOne({
+      id: +userId,
+    });
+
+    if (!user) {
+      throw new HttpException("Student not found", 404);
+    }
+
+    if (!studentId) {
+      throw new HttpException("Missing studentId", 400);
+    }
+    const classMemberships = await this.classMembershipRepository.find({
+      where: { studentId: studentId },
+    });
+
+    classMemberships.forEach((classMembership) => {
+      classMembership.user = user;
+    });
+
+    user.studentId = studentId;
+    await this.usersService.update(user.id, user);
+
+    return this.classMembershipRepository.save(classMemberships);
   }
 
   async inviteClassmembership(
@@ -360,7 +413,7 @@ export class ClassesService {
     classId: Class["id"],
     assignmentId: Assignment["id"],
     classMembershipId: ClassMembership["id"],
-    updateClassMembershipAssignmentDto: Partial<ClassMembershipAssignment>
+    updateClassMembershipAssignmentDto: UpdateClassMembershipAssignmentDto
   ): Promise<ClassMembershipAssignment> {
     if (!assignmentId || !classMembershipId) {
       throw new HttpException("Missing assignmentId or classMembershipId", 400);

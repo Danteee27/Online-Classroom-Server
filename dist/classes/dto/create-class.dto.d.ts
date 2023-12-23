@@ -7,6 +7,7 @@ export declare class CreateClassDto {
 export declare class CreateClassMembershipDto {
     fullName: string;
     role: ClassMembershipRole;
+    studentId: string;
 }
 export declare class InviteClassMembershipDto {
     inviterId: string;
@@ -31,4 +32,8 @@ export declare class CreateNotificationDto {
     classMembershipAssignmentId: string;
     title: string;
     description: string;
+}
+export declare class MapUserToClassMembershipDto {
+    userId: string;
+    studentId: string;
 }

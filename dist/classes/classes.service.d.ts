@@ -1,6 +1,6 @@
 import { Class } from "./entities/class.entity";
 import { Repository } from "typeorm";
-import { CreateAssignmentDto, CreateClassDto, CreateClassMembershipAssignmentDto, CreateClassMembershipDto, CreateNotificationDto, InviteClassMembershipDto } from "./dto/create-class.dto";
+import { CreateAssignmentDto, CreateClassDto, CreateClassMembershipAssignmentDto, CreateClassMembershipDto, CreateNotificationDto, InviteClassMembershipDto, MapUserToClassMembershipDto } from "./dto/create-class.dto";
 import { EntityCondition } from "src/utils/types/entity-condition.type";
 import { NullableType } from "src/utils/types/nullable.type";
 import { ClassMembership } from "./entities/class-membership.entity";
@@ -9,7 +9,7 @@ import { MailService } from "src/mail/mail.service";
 import { Assignment } from "./entities/assignment.entity";
 import { ClassMembershipAssignment } from "./entities/class-membership-assignment.entity";
 import { User } from "src/users/entities/user.entity";
-import { UpdateAssignmentDto, UpdateClassMembershipDto } from "./dto/update-class.dto";
+import { UpdateAssignmentDto, UpdateClassDto, UpdateClassMembershipAssignmentDto, UpdateClassMembershipDto } from "./dto/update-class.dto";
 import { Notification } from "./entities/notification.entity";
 export declare class ClassesService {
     private classRepository;
@@ -20,16 +20,18 @@ export declare class ClassesService {
     private classMembershipAssignmentRepository;
     private notificationRepository;
     constructor(classRepository: Repository<Class>, usersService: UsersService, mailService: MailService, classMembershipRepository: Repository<ClassMembership>, assignmentRepository: Repository<Assignment>, classMembershipAssignmentRepository: Repository<ClassMembershipAssignment>, notificationRepository: Repository<Notification>);
-    create(createClassDto: CreateClassDto): Promise<Class>;
+    createClass(createClassDto: CreateClassDto): Promise<Class>;
+    updateClass(classId: Class["id"], updateClassDto: UpdateClassDto): Promise<Class>;
     findAll(): Promise<NullableType<Class[]>>;
     findOne(fields: EntityCondition<Class>): Promise<NullableType<Class>>;
     createClassMembership(id: Class["id"], createClassMembershipDto: CreateClassMembershipDto): Promise<ClassMembership>;
     updateClassMembership(classId: Class["id"], classMembershipId: ClassMembership["id"], updateClassMembershipDto: UpdateClassMembershipDto): Promise<ClassMembership>;
+    mapUserToClassMembership(mapUserToClassMembershipDto: MapUserToClassMembershipDto): Promise<ClassMembership[]>;
     inviteClassmembership(inviteClassMembershipDto: InviteClassMembershipDto): Promise<any>;
     update(id: Class["id"], updateClassDto: CreateClassDto): Promise<Class>;
     createAssignment(classId: Class["id"], createAssignmentDto: CreateAssignmentDto): Promise<Assignment>;
     createClassMembershipAssignment(classId: Class["id"], createClassMembershipAssignmentDto: CreateClassMembershipAssignmentDto): Promise<ClassMembershipAssignment>;
-    updateClassMembershipAssignment(classId: Class["id"], assignmentId: Assignment["id"], classMembershipId: ClassMembership["id"], updateClassMembershipAssignmentDto: Partial<ClassMembershipAssignment>): Promise<ClassMembershipAssignment>;
+    updateClassMembershipAssignment(classId: Class["id"], assignmentId: Assignment["id"], classMembershipId: ClassMembership["id"], updateClassMembershipAssignmentDto: UpdateClassMembershipAssignmentDto): Promise<ClassMembershipAssignment>;
     updateAssignment(classId: Class["id"], assignmentId: Assignment["id"], updateAssignmentDto: UpdateAssignmentDto): Promise<Assignment>;
     getNotifciations(userId: User["id"]): Promise<Notification[]>;
     createNotification(createNotificationDto: CreateNotificationDto): Promise<Notification>;

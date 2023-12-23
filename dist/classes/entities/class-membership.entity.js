@@ -41,6 +41,10 @@ __decorate([
     __metadata("design:type", String)
 ], ClassMembership.prototype, "fullName", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: String, nullable: true }),
+    __metadata("design:type", Object)
+], ClassMembership.prototype, "studentId", void 0);
+__decorate([
     (0, typeorm_1.Column)({
         type: "enum",
         enum: class_membership_role_enum_1.ClassMembershipRole,

@@ -33,6 +33,9 @@ export class User extends EntityHelper {
   @Expose({ groups: ["me", "admin"] })
   provider: string;
 
+  @Column({ type: String, nullable: true, unique: true })
+  studentId: string | null;
+
   @Index()
   @Column({ type: String, nullable: true })
   @Expose({ groups: ["me", "admin"] })

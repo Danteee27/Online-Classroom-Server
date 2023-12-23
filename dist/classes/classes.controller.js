@@ -23,7 +23,7 @@ let ClassesController = class ClassesController {
         this.classesService = classesService;
     }
     create(createClassDto) {
-        return this.classesService.create(createClassDto);
+        return this.classesService.createClass(createClassDto);
     }
     findAll() {
         return this.classesService.findAll();
@@ -39,6 +39,9 @@ let ClassesController = class ClassesController {
     }
     updateClassMembershipAssignment(classId, assignmentId, classMembershipId, updateClassMembershipAssignmentDto) {
         return this.classesService.updateClassMembershipAssignment(+classId, +assignmentId, +classMembershipId, updateClassMembershipAssignmentDto);
+    }
+    mapUserToClassMembership(mapUserToClassMembershipDto) {
+        return this.classesService.mapUserToClassMembership(mapUserToClassMembershipDto);
     }
     addClassMembershipAssignment(classId, assignmentId, classMembershipId) {
         return this.classesService.createClassMembershipAssignment(+classId, {
@@ -134,6 +137,17 @@ __decorate([
     __metadata("design:paramtypes", [String, String, String, update_class_dto_1.UpdateClassMembershipAssignmentDto]),
     __metadata("design:returntype", Promise)
 ], ClassesController.prototype, "updateClassMembershipAssignment", null);
+__decorate([
+    (0, common_1.SerializeOptions)({
+        groups: ["admin", "user"],
+    }),
+    (0, common_1.Post)("/mapUserToClassMembership"),
+    (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_class_dto_1.MapUserToClassMembershipDto]),
+    __metadata("design:returntype", Promise)
+], ClassesController.prototype, "mapUserToClassMembership", null);
 __decorate([
     (0, common_1.SerializeOptions)({
         groups: ["admin", "user"],

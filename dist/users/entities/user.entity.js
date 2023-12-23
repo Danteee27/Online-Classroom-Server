@@ -41,6 +41,10 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "provider", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: String, nullable: true, unique: true }),
+    __metadata("design:type", Object)
+], User.prototype, "studentId", void 0);
+__decorate([
     (0, typeorm_1.Index)(),
     (0, typeorm_1.Column)({ type: String, nullable: true }),
     (0, class_transformer_1.Expose)({ groups: ["me", "admin"] }),

@@ -61,6 +61,10 @@ __decorate([
     (0, typeorm_1.Column)({ type: Boolean, default: false }),
     __metadata("design:type", Boolean)
 ], Assignment.prototype, "deleted", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: Number, nullable: true }),
+    __metadata("design:type", Object)
+], Assignment.prototype, "order", void 0);
 exports.Assignment = Assignment = __decorate([
     (0, typeorm_1.Entity)()
 ], Assignment);

@@ -2,6 +2,21 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsOptional, IsNumber, IsString } from "class-validator";
 import { ClassMembershipRole } from "../enums/class-membership-role.enum";
 
+export class UpdateClassDto {
+  @ApiPropertyOptional({ example: "Math 101" })
+  @IsOptional()
+  @IsString()
+  className?: string;
+
+  @ApiPropertyOptional({ example: "This is a math class" })
+  @IsOptional()
+  @IsString()
+  description?: string;
+
+  @ApiPropertyOptional({ example: true })
+  @IsOptional()
+  active?: boolean;
+}
 export class UpdateAssignmentDto {
   @ApiPropertyOptional({ example: 90 })
   @IsOptional()
@@ -25,6 +40,11 @@ export class UpdateAssignmentDto {
   @ApiPropertyOptional({ example: true })
   @IsOptional()
   deleted?: boolean;
+
+  @ApiPropertyOptional({ example: 1 })
+  @IsOptional()
+  @IsNumber()
+  order?: number;
 }
 
 export class UpdateClassMembershipAssignmentDto {
@@ -32,6 +52,11 @@ export class UpdateClassMembershipAssignmentDto {
   @IsOptional()
   @IsNumber()
   currentGrade?: number;
+
+  @ApiPropertyOptional({ example: "Excellent performance" })
+  @IsOptional()
+  @IsString()
+  studentExplanation?: string;
 
   @ApiPropertyOptional({ example: 80 })
   @IsOptional()
@@ -48,15 +73,20 @@ export class UpdateClassMembershipAssignmentDto {
   @IsString()
   description?: string;
 
-  @ApiPropertyOptional({ example: "Great work!" })
-  @IsOptional()
-  @IsString()
-  studentReview?: string;
-
-  @ApiPropertyOptional({ example: "Keep it up!" })
+  @ApiPropertyOptional({ example: "You are wrong!" })
   @IsOptional()
   @IsString()
   teacherComment?: string;
+
+  @ApiPropertyOptional({ example: "Why I am so bad???" })
+  @IsOptional()
+  @IsString()
+  studentComment?: string;
+
+  @ApiPropertyOptional({ example: "Great work! I will fix the point" })
+  @IsOptional()
+  @IsString()
+  teacherFinalisedComment?: string;
 
   @ApiPropertyOptional({ example: true })
   @IsOptional()

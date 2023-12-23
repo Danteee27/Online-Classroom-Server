@@ -12,4 +12,5 @@ export declare class Assignment {
     dueDate: Date;
     classMembershipAssignments: ClassMembershipAssignment[];
     deleted: boolean;
+    order: number | null;
 }

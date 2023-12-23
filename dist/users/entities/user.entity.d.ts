@@ -8,6 +8,7 @@ export declare class User extends EntityHelper {
     email: string | null;
     password: string;
     provider: string;
+    studentId: string | null;
     socialId: string | null;
     firstName: string | null;
     lastName: string | null;

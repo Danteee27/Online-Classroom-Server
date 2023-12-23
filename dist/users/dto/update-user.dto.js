@@ -25,11 +25,11 @@ class UpdateUserDto extends (0, swagger_1.PartialType)(create_user_dto_1.CreateU
 }
 exports.UpdateUserDto = UpdateUserDto;
 __decorate([
-    (0, swagger_2.ApiProperty)({ example: 'test1@example.com' }),
+    (0, swagger_2.ApiProperty)({ example: "test1@example.com" }),
     (0, class_transformer_1.Transform)(lower_case_transformer_1.lowerCaseTransformer),
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.Validate)(is_not_exists_validator_1.IsNotExist, ['User'], {
-        message: 'emailAlreadyExists',
+    (0, class_validator_1.Validate)(is_not_exists_validator_1.IsNotExist, ["User"], {
+        message: "emailAlreadyExists",
     }),
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", Object)
@@ -41,36 +41,41 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "password", void 0);
 __decorate([
-    (0, swagger_2.ApiProperty)({ example: 'John' }),
+    (0, swagger_2.ApiProperty)({ example: "123" }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Object)
+], UpdateUserDto.prototype, "studentId", void 0);
+__decorate([
+    (0, swagger_2.ApiProperty)({ example: "John" }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Object)
 ], UpdateUserDto.prototype, "firstName", void 0);
 __decorate([
-    (0, swagger_2.ApiProperty)({ example: 'Doe' }),
+    (0, swagger_2.ApiProperty)({ example: "Doe" }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Object)
 ], UpdateUserDto.prototype, "lastName", void 0);
 __decorate([
     (0, swagger_2.ApiProperty)({ type: () => file_entity_1.FileEntity }),
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.Validate)(is_exists_validator_1.IsExist, ['FileEntity', 'id'], {
-        message: 'imageNotExists',
+    (0, class_validator_1.Validate)(is_exists_validator_1.IsExist, ["FileEntity", "id"], {
+        message: "imageNotExists",
     }),
     __metadata("design:type", Object)
 ], UpdateUserDto.prototype, "photo", void 0);
 __decorate([
     (0, swagger_2.ApiProperty)({ type: role_entity_1.Role }),
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.Validate)(is_exists_validator_1.IsExist, ['Role', 'id'], {
-        message: 'roleNotExists',
+    (0, class_validator_1.Validate)(is_exists_validator_1.IsExist, ["Role", "id"], {
+        message: "roleNotExists",
     }),
     __metadata("design:type", Object)
 ], UpdateUserDto.prototype, "role", void 0);
 __decorate([
     (0, swagger_2.ApiProperty)({ type: status_entity_1.Status }),
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.Validate)(is_exists_validator_1.IsExist, ['Status', 'id'], {
-        message: 'statusNotExists',
+    (0, class_validator_1.Validate)(is_exists_validator_1.IsExist, ["Status", "id"], {
+        message: "statusNotExists",
     }),
     __metadata("design:type", status_entity_1.Status)
 ], UpdateUserDto.prototype, "status", void 0);

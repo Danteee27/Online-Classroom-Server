@@ -51,4 +51,7 @@ export class Assignment {
 
   @Column({ type: Boolean, default: false })
   deleted: boolean;
+
+  @Column({ type: Number, nullable: true })
+  order: number | null;
 }
