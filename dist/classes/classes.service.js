@@ -334,7 +334,7 @@ let ClassesService = class ClassesService {
     }
     findAllClassMembershipAssignment(classId, assignmentId) {
         if (!classId || !assignmentId) {
-            throw new common_1.HttpException("Missing classId, classMembershipId or assignmentId", 400);
+            throw new common_1.HttpException("Missing classId or assignmentId", 400);
         }
         return this.classMembershipAssignmentRepository.find({
             where: {

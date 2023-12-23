@@ -145,7 +145,7 @@ __decorate([
     (0, common_1.SerializeOptions)({
         groups: ["admin", "user"],
     }),
-    (0, common_1.Get)(":classId/classMemberships:/classMembershipId/assignment/:assignmentId"),
+    (0, common_1.Get)(":classId/classMemberships/:classMembershipId/assignment/:assignmentId"),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Param)("classId")),
     __param(1, (0, common_1.Param)("assignmentId")),

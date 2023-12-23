@@ -542,10 +542,7 @@ export class ClassesService {
     assignmentId: Assignment["id"]
   ): Promise<ClassMembershipAssignment[]> {
     if (!classId || !assignmentId) {
-      throw new HttpException(
-        "Missing classId, classMembershipId or assignmentId",
-        400
-      );
+      throw new HttpException("Missing classId or assignmentId", 400);
     }
 
     return this.classMembershipAssignmentRepository.find({

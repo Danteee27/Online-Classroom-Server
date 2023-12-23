@@ -113,7 +113,7 @@ export class ClassesController {
   @SerializeOptions({
     groups: ["admin", "user"],
   })
-  @Get(":classId/classMemberships:/classMembershipId/assignment/:assignmentId")
+  @Get(":classId/classMemberships/:classMembershipId/assignment/:assignmentId")
   @HttpCode(HttpStatus.OK)
   getClassMembershipAssignment(
     @Param("classId") classId: string,
