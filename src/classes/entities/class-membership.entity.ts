@@ -26,6 +26,9 @@ export class ClassMembership {
   })
   class: Class;
 
+  @Column({ type: String, nullable: true })
+  fullName: string;
+
   @Column({
     type: "enum",
     enum: ClassMembershipRole,

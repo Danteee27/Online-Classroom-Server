@@ -66,7 +66,7 @@ let ClassesService = class ClassesService {
             relations: ["classMemberships", "assignments"],
         });
     }
-    async addClassMembership(id, addMembershipDto) {
+    async createClassMembership(id, createClassMembershipDto) {
         let classEntity = await this.classRepository.findOne({
             where: { id },
             relations: ["classMemberships"],
@@ -74,22 +74,41 @@ let ClassesService = class ClassesService {
         if (!classEntity) {
             throw new common_1.HttpException("Class not found", 404);
         }
-        let user = await this.usersService.findOne({
-            id: +addMembershipDto.userId,
-        });
-        if (!user) {
-            throw new common_1.HttpException("User not found", 404);
-        }
-        if (classEntity.classMemberships.find((classMembership) => classMembership.user.id === +addMembershipDto.userId)) {
-            throw new common_1.HttpException("User already in class", 400);
-        }
         let classMembership = await this.classMembershipRepository.save(this.classMembershipRepository.create({
-            user,
             class: classEntity,
-            role: addMembershipDto.role,
+            role: createClassMembershipDto.role,
+            fullName: createClassMembershipDto.fullName,
         }));
         classEntity.classMemberships.push(classMembership);
-        return await this.classRepository.save(classEntity);
+        await this.classRepository.save(classEntity);
+        return classMembership;
+    }
+    async updateClassMembership(classId, classMembershipId, updateClassMembershipDto) {
+        if (!classMembershipId) {
+            throw new common_1.HttpException("Missing classMembershipId", 400);
+        }
+        const classMembership = await this.classMembershipRepository.findOne({
+            where: { id: +classMembershipId, class: { id: +classId } },
+        });
+        if (!classMembership) {
+            throw new common_1.HttpException("ClassMembership not found", 404);
+        }
+        if (updateClassMembershipDto.userId) {
+            const user = await this.usersService.findOne({
+                id: +updateClassMembershipDto.userId,
+            });
+            if (!user) {
+                throw new common_1.HttpException("User not found", 404);
+            }
+            classMembership.user = user;
+        }
+        if (updateClassMembershipDto.role) {
+            classMembership.role = updateClassMembershipDto.role;
+        }
+        if (updateClassMembershipDto.fullName) {
+            classMembership.fullName = updateClassMembershipDto.fullName;
+        }
+        return this.classMembershipRepository.save(classMembership);
     }
     async inviteClassmembership(inviteClassMembershipDto) {
         let classEntity = await this.classRepository.findOne({

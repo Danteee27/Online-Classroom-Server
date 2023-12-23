@@ -41,6 +41,14 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => assignment_entity_1.Assignment, (Assignment) => Assignment.class),
     __metadata("design:type", Array)
 ], Class.prototype, "assignments", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: Date, default: new Date() }),
+    __metadata("design:type", Date)
+], Class.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], Class.prototype, "active", void 0);
 exports.Class = Class = __decorate([
     (0, typeorm_1.Entity)()
 ], Class);

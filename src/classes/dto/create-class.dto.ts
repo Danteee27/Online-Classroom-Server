@@ -21,11 +21,11 @@ export class CreateClassDto {
   description: string;
 }
 
-export class AddClassMembershipDto {
+export class CreateClassMembershipDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  userId: string;
+  fullName: string;
 
   @ApiProperty()
   @IsEnum(ClassMembershipRole)

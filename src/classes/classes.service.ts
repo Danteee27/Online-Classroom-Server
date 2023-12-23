@@ -3,10 +3,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Class } from "./entities/class.entity";
 import { Repository } from "typeorm";
 import {
-  AddClassMembershipDto,
   CreateAssignmentDto,
   CreateClassDto,
   CreateClassMembershipAssignmentDto,
+  CreateClassMembershipDto,
   CreateNotificationDto,
   InviteClassMembershipDto,
 } from "./dto/create-class.dto";
@@ -19,7 +19,10 @@ import { ClassMembershipRole } from "./enums/class-membership-role.enum";
 import { Assignment } from "./entities/assignment.entity";
 import { ClassMembershipAssignment } from "./entities/class-membership-assignment.entity";
 import { User } from "src/users/entities/user.entity";
-import { UpdateAssignmentDto } from "./dto/update-class.dto";
+import {
+  UpdateAssignmentDto,
+  UpdateClassMembershipDto,
+} from "./dto/update-class.dto";
 import { EventsService } from "src/events/events.service";
 import { Notification } from "./entities/notification.entity";
 
@@ -80,10 +83,10 @@ export class ClassesService {
     });
   }
 
-  async addClassMembership(
+  async createClassMembership(
     id: Class["id"],
-    addMembershipDto: AddClassMembershipDto
-  ): Promise<Class> {
+    createClassMembershipDto: CreateClassMembershipDto
+  ): Promise<ClassMembership> {
     let classEntity = await this.classRepository.findOne({
       where: { id },
       relations: ["classMemberships"],
@@ -91,33 +94,56 @@ export class ClassesService {
     if (!classEntity) {
       throw new HttpException("Class not found", 404);
     }
-    let user = await this.usersService.findOne({
-      id: +addMembershipDto.userId,
-    });
-    if (!user) {
-      throw new HttpException("User not found", 404);
-    }
-
-    if (
-      classEntity.classMemberships.find(
-        (classMembership) =>
-          classMembership.user.id === +addMembershipDto.userId
-      )
-    ) {
-      throw new HttpException("User already in class", 400);
-    }
 
     let classMembership = await this.classMembershipRepository.save(
       this.classMembershipRepository.create({
-        user,
         class: classEntity,
-        role: addMembershipDto.role,
+        role: createClassMembershipDto.role,
+        fullName: createClassMembershipDto.fullName,
       })
     );
-
     classEntity.classMemberships.push(classMembership);
 
-    return await this.classRepository.save(classEntity);
+    await this.classRepository.save(classEntity);
+
+    return classMembership;
+  }
+
+  async updateClassMembership(
+    classId: Class["id"],
+    classMembershipId: ClassMembership["id"],
+    updateClassMembershipDto: UpdateClassMembershipDto
+  ): Promise<ClassMembership> {
+    if (!classMembershipId) {
+      throw new HttpException("Missing classMembershipId", 400);
+    }
+    const classMembership = await this.classMembershipRepository.findOne({
+      where: { id: +classMembershipId, class: { id: +classId } },
+    });
+
+    if (!classMembership) {
+      throw new HttpException("ClassMembership not found", 404);
+    }
+
+    if (updateClassMembershipDto.userId) {
+      const user = await this.usersService.findOne({
+        id: +updateClassMembershipDto.userId,
+      });
+      if (!user) {
+        throw new HttpException("User not found", 404);
+      }
+      classMembership.user = user;
+    }
+
+    if (updateClassMembershipDto.role) {
+      classMembership.role = updateClassMembershipDto.role;
+    }
+
+    if (updateClassMembershipDto.fullName) {
+      classMembership.fullName = updateClassMembershipDto.fullName;
+    }
+
+    return this.classMembershipRepository.save(classMembership);
   }
 
   async inviteClassmembership(

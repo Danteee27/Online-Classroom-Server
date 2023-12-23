@@ -1,3 +1,4 @@
+import { ClassMembershipRole } from "../enums/class-membership-role.enum";
 export declare class UpdateAssignmentDto {
     maxGrade?: number;
     name?: string;
@@ -16,4 +17,9 @@ export declare class UpdateClassMembershipAssignmentDto {
     isRequested?: boolean;
     isReviewed?: boolean;
     isSubmitted?: boolean;
+}
+export declare class UpdateClassMembershipDto {
+    userId?: string;
+    fullName?: string;
+    role?: ClassMembershipRole;
 }

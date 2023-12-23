@@ -22,4 +22,10 @@ export class Class extends EntityHelper {
 
   @OneToMany(() => Assignment, (Assignment) => Assignment.class)
   assignments: Assignment[];
+
+  @Column({ type: Date, default: new Date() })
+  createdAt: Date;
+
+  @Column({ type: Boolean, default: false })
+  active: boolean;
 }

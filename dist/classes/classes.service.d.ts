@@ -1,6 +1,6 @@
 import { Class } from "./entities/class.entity";
 import { Repository } from "typeorm";
-import { AddClassMembershipDto, CreateAssignmentDto, CreateClassDto, CreateClassMembershipAssignmentDto, CreateNotificationDto, InviteClassMembershipDto } from "./dto/create-class.dto";
+import { CreateAssignmentDto, CreateClassDto, CreateClassMembershipAssignmentDto, CreateClassMembershipDto, CreateNotificationDto, InviteClassMembershipDto } from "./dto/create-class.dto";
 import { EntityCondition } from "src/utils/types/entity-condition.type";
 import { NullableType } from "src/utils/types/nullable.type";
 import { ClassMembership } from "./entities/class-membership.entity";
@@ -9,7 +9,7 @@ import { MailService } from "src/mail/mail.service";
 import { Assignment } from "./entities/assignment.entity";
 import { ClassMembershipAssignment } from "./entities/class-membership-assignment.entity";
 import { User } from "src/users/entities/user.entity";
-import { UpdateAssignmentDto } from "./dto/update-class.dto";
+import { UpdateAssignmentDto, UpdateClassMembershipDto } from "./dto/update-class.dto";
 import { Notification } from "./entities/notification.entity";
 export declare class ClassesService {
     private classRepository;
@@ -23,7 +23,8 @@ export declare class ClassesService {
     create(createClassDto: CreateClassDto): Promise<Class>;
     findAll(): Promise<NullableType<Class[]>>;
     findOne(fields: EntityCondition<Class>): Promise<NullableType<Class>>;
-    addClassMembership(id: Class["id"], addMembershipDto: AddClassMembershipDto): Promise<Class>;
+    createClassMembership(id: Class["id"], createClassMembershipDto: CreateClassMembershipDto): Promise<ClassMembership>;
+    updateClassMembership(classId: Class["id"], classMembershipId: ClassMembership["id"], updateClassMembershipDto: UpdateClassMembershipDto): Promise<ClassMembership>;
     inviteClassmembership(inviteClassMembershipDto: InviteClassMembershipDto): Promise<any>;
     update(id: Class["id"], updateClassDto: CreateClassDto): Promise<Class>;
     createAssignment(classId: Class["id"], createAssignmentDto: CreateAssignmentDto): Promise<Assignment>;

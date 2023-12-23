@@ -8,4 +8,6 @@ export declare class Class extends EntityHelper {
     description: string;
     classMemberships: ClassMembership[];
     assignments: Assignment[];
+    createdAt: Date;
+    active: boolean;
 }

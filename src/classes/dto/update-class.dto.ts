@@ -1,5 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsOptional, IsNumber, IsString } from "class-validator";
+import { ClassMembershipRole } from "../enums/class-membership-role.enum";
 
 export class UpdateAssignmentDto {
   @ApiPropertyOptional({ example: 90 })
@@ -72,4 +73,20 @@ export class UpdateClassMembershipAssignmentDto {
   @ApiPropertyOptional({ example: true })
   @IsOptional()
   isSubmitted?: boolean;
+}
+
+export class UpdateClassMembershipDto {
+  @ApiPropertyOptional({ example: "1" })
+  @IsOptional()
+  @IsString()
+  userId?: string;
+
+  @ApiPropertyOptional({ example: "Duc Anh" })
+  @IsOptional()
+  @IsString()
+  fullName?: string;
+
+  @ApiPropertyOptional({ example: "TEACHER" })
+  @IsOptional()
+  role?: ClassMembershipRole;
 }

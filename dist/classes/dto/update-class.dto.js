@@ -9,9 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateClassMembershipAssignmentDto = exports.UpdateAssignmentDto = void 0;
+exports.UpdateClassMembershipDto = exports.UpdateClassMembershipAssignmentDto = exports.UpdateAssignmentDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+const class_membership_role_enum_1 = require("../enums/class-membership-role.enum");
 class UpdateAssignmentDto {
 }
 exports.UpdateAssignmentDto = UpdateAssignmentDto;
@@ -102,4 +103,24 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
 ], UpdateClassMembershipAssignmentDto.prototype, "isSubmitted", void 0);
+class UpdateClassMembershipDto {
+}
+exports.UpdateClassMembershipDto = UpdateClassMembershipDto;
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ example: "1" }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateClassMembershipDto.prototype, "userId", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ example: "Duc Anh" }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateClassMembershipDto.prototype, "fullName", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ example: "TEACHER" }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateClassMembershipDto.prototype, "role", void 0);
 //# sourceMappingURL=update-class.dto.js.map

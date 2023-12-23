@@ -4,8 +4,8 @@ export declare class CreateClassDto {
     className: string;
     description: string;
 }
-export declare class AddClassMembershipDto {
-    userId: string;
+export declare class CreateClassMembershipDto {
+    fullName: string;
     role: ClassMembershipRole;
 }
 export declare class InviteClassMembershipDto {

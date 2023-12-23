@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateNotificationDto = exports.CreateClassMembershipAssignmentDto = exports.CreateAssignmentDto = exports.InviteClassMembershipDto = exports.AddClassMembershipDto = exports.CreateClassDto = void 0;
+exports.CreateNotificationDto = exports.CreateClassMembershipAssignmentDto = exports.CreateAssignmentDto = exports.InviteClassMembershipDto = exports.CreateClassMembershipDto = exports.CreateClassDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 const class_membership_role_enum_1 = require("../enums/class-membership-role.enum");
@@ -33,20 +33,20 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateClassDto.prototype, "description", void 0);
-class AddClassMembershipDto {
+class CreateClassMembershipDto {
 }
-exports.AddClassMembershipDto = AddClassMembershipDto;
+exports.CreateClassMembershipDto = CreateClassMembershipDto;
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], AddClassMembershipDto.prototype, "userId", void 0);
+], CreateClassMembershipDto.prototype, "fullName", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsEnum)(class_membership_role_enum_1.ClassMembershipRole),
     __metadata("design:type", String)
-], AddClassMembershipDto.prototype, "role", void 0);
+], CreateClassMembershipDto.prototype, "role", void 0);
 class InviteClassMembershipDto {
 }
 exports.InviteClassMembershipDto = InviteClassMembershipDto;

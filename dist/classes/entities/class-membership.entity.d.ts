@@ -8,6 +8,7 @@ export declare class ClassMembership {
     id: number | null;
     user: User;
     class: Class;
+    fullName: string;
     role: ClassMembershipRole;
     classMembershipAssignments: ClassMembershipAssignment[];
     sentNotifications: Notification[];

@@ -1,10 +1,11 @@
 import { NullableType } from "src/utils/types/nullable.type";
 import { ClassesService } from "./classes.service";
-import { AddClassMembershipDto, CreateAssignmentDto, CreateClassDto, InviteClassMembershipDto } from "./dto/create-class.dto";
+import { CreateAssignmentDto, CreateClassDto, CreateClassMembershipDto, InviteClassMembershipDto } from "./dto/create-class.dto";
 import { Class } from "./entities/class.entity";
 import { Assignment } from "./entities/assignment.entity";
-import { UpdateAssignmentDto, UpdateClassMembershipAssignmentDto } from "./dto/update-class.dto";
+import { UpdateAssignmentDto, UpdateClassMembershipAssignmentDto, UpdateClassMembershipDto } from "./dto/update-class.dto";
 import { ClassMembershipAssignment } from "./entities/class-membership-assignment.entity";
+import { ClassMembership } from "./entities/class-membership.entity";
 export declare class ClassesController {
     private readonly classesService;
     constructor(classesService: ClassesService);
@@ -15,7 +16,8 @@ export declare class ClassesController {
     updateAssignment(id: string, assignmentId: string, updateAssignmentDto: UpdateAssignmentDto): Promise<Assignment>;
     updateClassMembershipAssignment(classId: string, assignmentId: string, classMembershipId: string, updateClassMembershipAssignmentDto: UpdateClassMembershipAssignmentDto): Promise<ClassMembershipAssignment>;
     addClassMembershipAssignment(classId: string, assignmentId: string, classMembershipId: string): Promise<ClassMembershipAssignment>;
-    addClassMember(id: string, createClassMemberDto: AddClassMembershipDto): Promise<Class>;
+    createClassMembership(id: string, createClassMembershipDto: CreateClassMembershipDto): Promise<ClassMembership>;
+    updateClassMembership(id: string, classMembershipId: string, updateClassMembershipDto: UpdateClassMembershipDto): Promise<ClassMembership>;
     inviteClassMember(inviteClassMembershipDto: InviteClassMembershipDto): Promise<Class>;
     findByClassCode(classCode: string): Promise<NullableType<Class>>;
     findOne(id: string): Promise<NullableType<Class>>;
