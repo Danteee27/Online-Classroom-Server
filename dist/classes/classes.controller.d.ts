@@ -14,6 +14,8 @@ export declare class ClassesController {
     createAssignment(id: string, createAssignmentDto: CreateAssignmentDto): Promise<Assignment>;
     findUserNotifications(userId: string): Promise<import("./entities/notification.entity").Notification[]>;
     updateAssignment(id: string, assignmentId: string, updateAssignmentDto: UpdateAssignmentDto): Promise<Assignment>;
+    getAllClassMembershipAssignments(classId: string, assignmentId: string): Promise<ClassMembershipAssignment[]>;
+    getClassMembershipAssignment(classId: string, assignmentId: string, classMembershipId: string): Promise<ClassMembershipAssignment | null>;
     updateClassMembershipAssignment(classId: string, assignmentId: string, classMembershipId: string, updateClassMembershipAssignmentDto: UpdateClassMembershipAssignmentDto): Promise<ClassMembershipAssignment>;
     mapUserToClassMembership(mapUserToClassMembershipDto: MapUserToClassMembershipDto): Promise<ClassMembership[]>;
     addClassMembershipAssignment(classId: string, assignmentId: string, classMembershipId: string): Promise<ClassMembershipAssignment>;

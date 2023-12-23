@@ -537,9 +537,44 @@ export class ClassesService {
     return this.notificationRepository.save(notification);
   }
 
-  findClassMembershipAssignment(classMembershipAssignmentId: string) {
+  findAllClassMembershipAssignment(
+    classId: Class["id"],
+    assignmentId: Assignment["id"]
+  ): Promise<ClassMembershipAssignment[]> {
+    if (!classId || !assignmentId) {
+      throw new HttpException(
+        "Missing classId, classMembershipId or assignmentId",
+        400
+      );
+    }
+
+    return this.classMembershipAssignmentRepository.find({
+      where: {
+        assignment: { id: +assignmentId },
+        classMembership: { class: { id: +classId } },
+      },
+      relations: ["classMembership", "assignment"],
+    });
+  }
+
+  findClassMembershipAssignment(
+    classId: Class["id"],
+    assignmentId: Assignment["id"],
+    classMembershipId: ClassMembership["id"]
+  ): Promise<ClassMembershipAssignment | null> {
+    if (!classId || !assignmentId || !classMembershipId) {
+      throw new HttpException(
+        "Missing classId, classMembershipId or assignmentId",
+        400
+      );
+    }
+
     return this.classMembershipAssignmentRepository.findOne({
-      where: { id: +classMembershipAssignmentId },
+      where: {
+        assignment: { id: +assignmentId },
+        classMembership: { id: +classMembershipId },
+      },
+      relations: ["classMembership", "assignment"],
     });
   }
 }

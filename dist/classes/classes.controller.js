@@ -37,6 +37,12 @@ let ClassesController = class ClassesController {
     updateAssignment(id, assignmentId, updateAssignmentDto) {
         return this.classesService.updateAssignment(+id, +assignmentId, updateAssignmentDto);
     }
+    getAllClassMembershipAssignments(classId, assignmentId) {
+        return this.classesService.findAllClassMembershipAssignment(+classId, +assignmentId);
+    }
+    getClassMembershipAssignment(classId, assignmentId, classMembershipId) {
+        return this.classesService.findClassMembershipAssignment(+classId, +assignmentId, +classMembershipId);
+    }
     updateClassMembershipAssignment(classId, assignmentId, classMembershipId, updateClassMembershipAssignmentDto) {
         return this.classesService.updateClassMembershipAssignment(+classId, +assignmentId, +classMembershipId, updateClassMembershipAssignmentDto);
     }
@@ -123,6 +129,31 @@ __decorate([
     __metadata("design:paramtypes", [String, String, update_class_dto_1.UpdateAssignmentDto]),
     __metadata("design:returntype", Promise)
 ], ClassesController.prototype, "updateAssignment", null);
+__decorate([
+    (0, common_1.SerializeOptions)({
+        groups: ["admin", "user"],
+    }),
+    (0, common_1.Get)(":classId/assignments/:assignmentId"),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Param)("classId")),
+    __param(1, (0, common_1.Param)("assignmentId")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], ClassesController.prototype, "getAllClassMembershipAssignments", null);
+__decorate([
+    (0, common_1.SerializeOptions)({
+        groups: ["admin", "user"],
+    }),
+    (0, common_1.Get)(":classId/classMemberships:/classMembershipId/assignment/:assignmentId"),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Param)("classId")),
+    __param(1, (0, common_1.Param)("assignmentId")),
+    __param(2, (0, common_1.Param)("classMembershipId")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:returntype", Promise)
+], ClassesController.prototype, "getClassMembershipAssignment", null);
 __decorate([
     (0, common_1.SerializeOptions)({
         groups: ["admin", "user"],

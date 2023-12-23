@@ -332,9 +332,28 @@ let ClassesService = class ClassesService {
         });
         return this.notificationRepository.save(notification);
     }
-    findClassMembershipAssignment(classMembershipAssignmentId) {
+    findAllClassMembershipAssignment(classId, assignmentId) {
+        if (!classId || !assignmentId) {
+            throw new common_1.HttpException("Missing classId, classMembershipId or assignmentId", 400);
+        }
+        return this.classMembershipAssignmentRepository.find({
+            where: {
+                assignment: { id: +assignmentId },
+                classMembership: { class: { id: +classId } },
+            },
+            relations: ["classMembership", "assignment"],
+        });
+    }
+    findClassMembershipAssignment(classId, assignmentId, classMembershipId) {
+        if (!classId || !assignmentId || !classMembershipId) {
+            throw new common_1.HttpException("Missing classId, classMembershipId or assignmentId", 400);
+        }
         return this.classMembershipAssignmentRepository.findOne({
-            where: { id: +classMembershipAssignmentId },
+            where: {
+                assignment: { id: +assignmentId },
+                classMembership: { id: +classMembershipId },
+            },
+            relations: ["classMembership", "assignment"],
         });
     }
 };

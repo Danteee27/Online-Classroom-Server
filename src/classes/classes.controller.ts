@@ -98,6 +98,38 @@ export class ClassesController {
   @SerializeOptions({
     groups: ["admin", "user"],
   })
+  @Get(":classId/assignments/:assignmentId")
+  @HttpCode(HttpStatus.OK)
+  getAllClassMembershipAssignments(
+    @Param("classId") classId: string,
+    @Param("assignmentId") assignmentId: string
+  ): Promise<ClassMembershipAssignment[]> {
+    return this.classesService.findAllClassMembershipAssignment(
+      +classId,
+      +assignmentId
+    );
+  }
+
+  @SerializeOptions({
+    groups: ["admin", "user"],
+  })
+  @Get(":classId/classMemberships:/classMembershipId/assignment/:assignmentId")
+  @HttpCode(HttpStatus.OK)
+  getClassMembershipAssignment(
+    @Param("classId") classId: string,
+    @Param("assignmentId") assignmentId: string,
+    @Param("classMembershipId") classMembershipId: string
+  ): Promise<ClassMembershipAssignment | null> {
+    return this.classesService.findClassMembershipAssignment(
+      +classId,
+      +assignmentId,
+      +classMembershipId
+    );
+  }
+
+  @SerializeOptions({
+    groups: ["admin", "user"],
+  })
   @Put(":classId/classMemberships/:classMembershipId/assignment/:assignmentId")
   @HttpCode(HttpStatus.OK)
   updateClassMembershipAssignment(

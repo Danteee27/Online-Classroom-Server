@@ -35,5 +35,6 @@ export declare class ClassesService {
     updateAssignment(classId: Class["id"], assignmentId: Assignment["id"], updateAssignmentDto: UpdateAssignmentDto): Promise<Assignment>;
     getNotifciations(userId: User["id"]): Promise<Notification[]>;
     createNotification(createNotificationDto: CreateNotificationDto): Promise<Notification>;
-    findClassMembershipAssignment(classMembershipAssignmentId: string): Promise<ClassMembershipAssignment | null>;
+    findAllClassMembershipAssignment(classId: Class["id"], assignmentId: Assignment["id"]): Promise<ClassMembershipAssignment[]>;
+    findClassMembershipAssignment(classId: Class["id"], assignmentId: Assignment["id"], classMembershipId: ClassMembership["id"]): Promise<ClassMembershipAssignment | null>;
 }
