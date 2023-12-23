@@ -29,6 +29,13 @@ let EventsGateway = class EventsGateway {
     async onStudentRequest(notification) {
         const { senderId, receiverId, classMembershipAssignmentId, title, description, } = notification;
         console.log("notification", notification);
+        const sentNotification = await this.classesService.createNotification({
+            senderId,
+            receiverId,
+            classMembershipAssignmentId,
+            title,
+            description,
+        });
         this.server.emit(receiverId, "hi");
     }
 };

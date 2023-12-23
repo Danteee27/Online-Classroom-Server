@@ -61,6 +61,8 @@ export class UsersService {
         "classMemberships.class",
         "classMemberships.receivedNotifications",
         "classMemberships.assignments",
+        "classMemberships.receivedNotifications.sender",
+        "classMemberships.receivedNotifications.receiver",
       ],
     });
   }
