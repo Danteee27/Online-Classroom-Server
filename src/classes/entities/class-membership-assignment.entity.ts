@@ -68,4 +68,7 @@ export class ClassMembershipAssignment {
     (notification) => notification.classMembershipAssignment
   )
   notifications: Notification[];
+
+  @Column({ type: Date, default: new Date() })
+  createdAt: Date;
 }

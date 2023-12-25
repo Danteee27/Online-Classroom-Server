@@ -18,4 +18,5 @@ export declare class ClassMembershipAssignment {
     isReviewed: boolean;
     isSubmitted: boolean;
     notifications: Notification[];
+    createdAt: Date;
 }

@@ -81,6 +81,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => notification_entity_1.Notification, (notification) => notification.classMembershipAssignment),
     __metadata("design:type", Array)
 ], ClassMembershipAssignment.prototype, "notifications", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: Date, default: new Date() }),
+    __metadata("design:type", Date)
+], ClassMembershipAssignment.prototype, "createdAt", void 0);
 exports.ClassMembershipAssignment = ClassMembershipAssignment = __decorate([
     (0, typeorm_1.Entity)()
 ], ClassMembershipAssignment);

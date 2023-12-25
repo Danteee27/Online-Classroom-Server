@@ -46,7 +46,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Class.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: Boolean, default: false }),
+    (0, typeorm_1.Column)({ type: Boolean, default: true }),
     __metadata("design:type", Boolean)
 ], Class.prototype, "active", void 0);
 exports.Class = Class = __decorate([

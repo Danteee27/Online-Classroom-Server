@@ -26,6 +26,6 @@ export class Class extends EntityHelper {
   @Column({ type: Date, default: new Date() })
   createdAt: Date;
 
-  @Column({ type: Boolean, default: false })
+  @Column({ type: Boolean, default: true })
   active: boolean;
 }
