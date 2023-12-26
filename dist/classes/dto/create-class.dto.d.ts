@@ -8,6 +8,7 @@ export declare class CreateClassMembershipDto {
     fullName: string;
     role: ClassMembershipRole;
     studentId: string;
+    userId: string;
 }
 export declare class InviteClassMembershipDto {
     inviterId: string;

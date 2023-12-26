@@ -28,6 +28,7 @@ import {
 } from "./dto/update-class.dto";
 import { EventsService } from "src/events/events.service";
 import { Notification } from "./entities/notification.entity";
+import { v4 as uuidv4 } from "uuid";
 
 @Injectable()
 export class ClassesService {
@@ -106,6 +107,8 @@ export class ClassesService {
     id: Class["id"],
     createClassMembershipDto: CreateClassMembershipDto
   ): Promise<ClassMembership> {
+    const { fullName, role, userId, studentId } = createClassMembershipDto;
+
     let classEntity = await this.classRepository.findOne({
       where: { id },
       relations: ["classMemberships"],
@@ -114,19 +117,47 @@ export class ClassesService {
       throw new HttpException("Class not found", 404);
     }
 
-    let classMembership = await this.classMembershipRepository.save(
-      this.classMembershipRepository.create({
-        class: classEntity,
-        role: createClassMembershipDto.role,
-        fullName: createClassMembershipDto.fullName,
-        studentId: createClassMembershipDto.studentId,
-      })
-    );
-    classEntity.classMemberships.push(classMembership);
+    if (studentId && userId) {
+      throw new HttpException("Cannot have both studentId and userId", 400);
+    }
 
-    await this.classRepository.save(classEntity);
+    if (!studentId && !userId) {
+      throw new HttpException("Must have either studentId or userId", 400);
+    }
 
-    return classMembership;
+    let classMembership = this.classMembershipRepository.create({
+      fullName,
+      role,
+      class: classEntity,
+    });
+
+    if (studentId) {
+      classMembership.studentId = studentId;
+
+      const user = await this.usersService.findOne({
+        studentId,
+      });
+      if (user) {
+        classMembership.user = user;
+      }
+    } else {
+      const user = await this.usersService.findOne({
+        id: +userId,
+      });
+      if (!user) {
+        throw new HttpException("User not found", 404);
+      }
+      if (!user.studentId) {
+        let myuuid: String = uuidv4();
+        user.studentId = myuuid.toString();
+        await this.usersService.update(user.id, user);
+      }
+
+      classMembership.studentId = user.studentId;
+      classMembership.user = user;
+    }
+
+    return await this.classMembershipRepository.save(classMembership);
   }
 
   async updateClassMembership(

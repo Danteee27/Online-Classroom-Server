@@ -1,6 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
-import { IsEnum, IsNotEmpty, IsString, Validate } from "class-validator";
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Validate,
+} from "class-validator";
 import { lowerCaseTransformer } from "src/utils/transformers/lower-case.transformer";
 import { IsNotExist } from "src/utils/validators/is-not-exists.validator";
 import { ClassMembershipRole } from "../enums/class-membership-role.enum";
@@ -31,10 +37,15 @@ export class CreateClassMembershipDto {
   @IsEnum(ClassMembershipRole)
   role: ClassMembershipRole;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
   studentId: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  userId: string;
 }
 
 export class InviteClassMembershipDto {

@@ -24,6 +24,7 @@ const class_membership_role_enum_1 = require("./enums/class-membership-role.enum
 const assignment_entity_1 = require("./entities/assignment.entity");
 const class_membership_assignment_entity_1 = require("./entities/class-membership-assignment.entity");
 const notification_entity_1 = require("./entities/notification.entity");
+const uuid_1 = require("uuid");
 let ClassesService = class ClassesService {
     constructor(classRepository, usersService, mailService, classMembershipRepository, assignmentRepository, classMembershipAssignmentRepository, notificationRepository) {
         this.classRepository = classRepository;
@@ -77,6 +78,7 @@ let ClassesService = class ClassesService {
         });
     }
     async createClassMembership(id, createClassMembershipDto) {
+        const { fullName, role, userId, studentId } = createClassMembershipDto;
         let classEntity = await this.classRepository.findOne({
             where: { id },
             relations: ["classMemberships"],
@@ -84,15 +86,42 @@ let ClassesService = class ClassesService {
         if (!classEntity) {
             throw new common_1.HttpException("Class not found", 404);
         }
-        let classMembership = await this.classMembershipRepository.save(this.classMembershipRepository.create({
+        if (studentId && userId) {
+            throw new common_1.HttpException("Cannot have both studentId and userId", 400);
+        }
+        if (!studentId && !userId) {
+            throw new common_1.HttpException("Must have either studentId or userId", 400);
+        }
+        let classMembership = this.classMembershipRepository.create({
+            fullName,
+            role,
             class: classEntity,
-            role: createClassMembershipDto.role,
-            fullName: createClassMembershipDto.fullName,
-            studentId: createClassMembershipDto.studentId,
-        }));
-        classEntity.classMemberships.push(classMembership);
-        await this.classRepository.save(classEntity);
-        return classMembership;
+        });
+        if (studentId) {
+            classMembership.studentId = studentId;
+            const user = await this.usersService.findOne({
+                studentId,
+            });
+            if (user) {
+                classMembership.user = user;
+            }
+        }
+        else {
+            const user = await this.usersService.findOne({
+                id: +userId,
+            });
+            if (!user) {
+                throw new common_1.HttpException("User not found", 404);
+            }
+            if (!user.studentId) {
+                let myuuid = (0, uuid_1.v4)();
+                user.studentId = myuuid.toString();
+                await this.usersService.update(user.id, user);
+            }
+            classMembership.studentId = user.studentId;
+            classMembership.user = user;
+        }
+        return await this.classMembershipRepository.save(classMembership);
     }
     async updateClassMembership(classId, classMembershipId, updateClassMembershipDto) {
         if (!classMembershipId) {

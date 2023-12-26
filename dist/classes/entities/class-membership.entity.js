@@ -42,7 +42,7 @@ __decorate([
 ], ClassMembership.prototype, "fullName", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: String, nullable: true }),
-    __metadata("design:type", Object)
+    __metadata("design:type", String)
 ], ClassMembership.prototype, "studentId", void 0);
 __decorate([
     (0, typeorm_1.Column)({

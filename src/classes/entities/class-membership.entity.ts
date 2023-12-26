@@ -30,7 +30,7 @@ export class ClassMembership {
   fullName: string;
 
   @Column({ type: String, nullable: true })
-  studentId: string | null;
+  studentId: string;
 
   @Column({
     type: "enum",

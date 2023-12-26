@@ -9,7 +9,7 @@ export declare class ClassMembership {
     user: User;
     class: Class;
     fullName: string;
-    studentId: string | null;
+    studentId: string;
     role: ClassMembershipRole;
     classMembershipAssignments: ClassMembershipAssignment[];
     sentNotifications: Notification[];
